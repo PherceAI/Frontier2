@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'contifico' => [
+        'base_url' => env('CONTIFICO_BASE_URL', 'https://api.contifico.com/sistema/api/v1'),
+        'api_key' => env('CONTIFICO_API_KEY'),
+    ],
+
 ];

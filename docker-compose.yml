@@ -1,14 +1,32 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: frontier2-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    ports:
+      - "${APP_HOST_PORT:-18000}:8000"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
   postgres:
     image: postgres:17-alpine
-    container_name: hotel-erp-postgres
+    container_name: frontier2-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: hotel_erp
       POSTGRES_USER: hotel_erp
       POSTGRES_PASSWORD: secret
     ports:
-      - "5432:5432"
+      - "${POSTGRES_HOST_PORT:-15432}:5432"
     volumes:
       - hotel_erp_postgres:/var/lib/postgresql/data
     healthcheck:
@@ -19,10 +37,10 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: hotel-erp-redis
+    container_name: frontier2-redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "${REDIS_HOST_PORT:-16379}:6379"
     volumes:
       - hotel_erp_redis:/data
     healthcheck:

@@ -12,13 +12,20 @@ class ManagementModulesTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutVite();
+    }
+
     public function test_assigned_users_can_visit_management_modules(): void
     {
         $user = $this->createAssignedManager();
 
         $this->actingAs($user);
 
-        collect(['/logbook', '/events', '/analytics', '/employees'])
+        collect(['/logbook', '/events', '/analytics', '/restaurant', '/employees'])
             ->each(fn (string $path) => $this->get($path)->assertOk());
     }
 

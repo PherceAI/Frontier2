@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowRight, BarChart3, BedDouble, BookOpenText, CalendarDays, LayoutDashboard, UsersRound } from 'lucide-react';
+import { ArrowRight, BarChart3, BedDouble, BookOpenText, CalendarDays, LayoutDashboard, UsersRound, UtensilsCrossed } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,6 +35,12 @@ const modules = [
         href: '/events',
         description: 'Grupos, restaurante, habitaciones, personal e insumos.',
         icon: CalendarDays,
+    },
+    {
+        title: 'Restaurante',
+        href: '/restaurant',
+        description: 'Ventas, cobros, proveedores, margen estimado y desempeno desde Contifico.',
+        icon: UtensilsCrossed,
     },
     {
         title: 'Analisis',
