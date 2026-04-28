@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Hotel ERP">
+    <rect width="512" height="512" rx="88" fill="#0f766e"/>
+    <path d="M128 346V166h54v68h148v-68h54v180h-54v-68H182v68h-54Z" fill="#ffffff"/>
+    <path d="M144 388h224" stroke="#ccfbf1" stroke-width="28" stroke-linecap="round"/>
+</svg>
