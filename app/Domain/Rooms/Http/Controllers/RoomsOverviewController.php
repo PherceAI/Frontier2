@@ -10,8 +10,8 @@ class RoomsOverviewController
 {
     public function __invoke(GetRoomsOverview $overview): Response
     {
-        return Inertia::render('modules/overview', [
-            'overview' => $overview->handle(),
+        return Inertia::render('rooms/dashboard', [
+            'dashboard' => $overview->handle(),
         ]);
     }
 }

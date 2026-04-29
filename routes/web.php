@@ -20,6 +20,7 @@ require app_path('Domain/Billing/routes.php');
 require app_path('Domain/Auth/routes.php');
 require app_path('Domain/Management/routes.php');
 require app_path('Domain/Restaurant/routes.php');
+require app_path('Domain/Inventory/routes.php');
 require app_path('Domain/EmployeePortal/routes.php');
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

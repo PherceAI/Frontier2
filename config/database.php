@@ -97,6 +97,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'supabase_legacy' => [
+            'driver' => 'pgsql',
+            'url' => env('SUPABASE_LEGACY_DATABASE_URL'),
+            'host' => env('SUPABASE_LEGACY_HOST', '127.0.0.1'),
+            'port' => env('SUPABASE_LEGACY_PORT', '5432'),
+            'database' => env('SUPABASE_LEGACY_DATABASE', 'postgres'),
+            'username' => env('SUPABASE_LEGACY_USERNAME', 'postgres'),
+            'password' => env('SUPABASE_LEGACY_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => env('SUPABASE_LEGACY_SCHEMA', 'public'),
+            'sslmode' => env('SUPABASE_LEGACY_SSLMODE', 'require'),
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),

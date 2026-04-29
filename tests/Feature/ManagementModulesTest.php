@@ -25,7 +25,7 @@ class ManagementModulesTest extends TestCase
 
         $this->actingAs($user);
 
-        collect(['/logbook', '/events', '/analytics', '/restaurant', '/employees'])
+        collect(['/rooms', '/logbook', '/events', '/analytics', '/restaurant', '/inventory', '/employees'])
             ->each(fn (string $path) => $this->get($path)->assertOk());
     }
 

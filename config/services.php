@@ -40,4 +40,12 @@ return [
         'api_key' => env('CONTIFICO_API_KEY'),
     ],
 
+    'legacy_erp' => [
+        'occupancy_table' => env('LEGACY_ERP_OCCUPANCY_TABLE', 'ocupacion_historico'),
+    ],
+
+    'inventory' => [
+        'google_sheets_url' => env('INVENTORY_GOOGLE_SHEETS_URL'),
+    ],
+
 ];
