@@ -5,8 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { AlertTriangle, ClipboardCheck, FilePenLine, Home, ListChecks, LoaderCircle, LogOut, Send } from 'lucide-react';
-import { FormEventHandler, useMemo, useState } from 'react';
-import { type ReactNode } from 'react';
+import { FormEventHandler, ReactNode, useMemo, useState } from 'react';
 
 type Area = {
     id: number;
@@ -21,22 +20,6 @@ type EventItem = {
     detail: string | null;
     status: string;
     severity: string;
-};
-
-type TaskItem = {
-    id: number;
-    title: string;
-    detail: string | null;
-    status: string;
-    rawStatus: string;
-    priority: string;
-    requiresValidation: boolean;
-    eventTitle: string | null;
-    dueAt: string | null;
-    assignedArea: string | null;
-    canComplete: boolean;
-    canValidate: boolean;
-    kitchenClosing: KitchenClosing | null;
 };
 
 type KitchenClosingItem = {
@@ -63,6 +46,22 @@ type KitchenClosing = {
     items: KitchenClosingItem[];
 };
 
+type TaskItem = {
+    id: number;
+    title: string;
+    detail: string | null;
+    status: string;
+    rawStatus: string;
+    priority: string;
+    requiresValidation: boolean;
+    eventTitle: string | null;
+    dueAt: string | null;
+    assignedArea: string | null;
+    canComplete: boolean;
+    canValidate: boolean;
+    kitchenClosing: KitchenClosing | null;
+};
+
 type FormField = {
     name: string;
     label?: string;
@@ -87,14 +86,6 @@ type NotificationItem = {
     body: string | null;
 };
 
-type KitchenStockCatalogItem = {
-    id: number;
-    category: string;
-    productName: string;
-    unit: string;
-    unitDetail: string | null;
-};
-
 type PortalProps = {
     employee: {
         name: string;
@@ -112,7 +103,6 @@ type PortalProps = {
     tasks: TaskItem[];
     forms: OperationalForm[];
     notifications: NotificationItem[];
-    kitchenStockCatalog: KitchenStockCatalogItem[];
 };
 
 type Tab = 'home' | 'load' | 'tasks';
@@ -133,9 +123,8 @@ function statusDot(status: string) {
     return 'bg-sky-500';
 }
 
-export default function Operations({ employee, activeArea, summary, events, tasks, forms, notifications, kitchenStockCatalog }: PortalProps) {
+export default function Operations({ employee, activeArea, summary, events, tasks, forms, notifications }: PortalProps) {
     const [tab, setTab] = useState<Tab>('home');
-
     const activeTasks = tasks.filter((task) => !['completed', 'validated', 'cancelled'].includes(task.rawStatus));
     const completedTasks = tasks.filter((task) => ['completed', 'validated'].includes(task.rawStatus));
 
@@ -159,12 +148,7 @@ export default function Operations({ employee, activeArea, summary, events, task
                     {employee.areas.length > 1 && (
                         <div className="flex gap-2 overflow-x-auto pb-1">
                             {employee.areas.map((area) => (
-                                <Button
-                                    key={area.id}
-                                    asChild
-                                    variant={activeArea?.slug === area.slug ? 'default' : 'outline'}
-                                    className="h-9 shrink-0 rounded-lg"
-                                >
+                                <Button key={area.id} asChild variant={activeArea?.slug === area.slug ? 'default' : 'outline'} className="h-9 shrink-0 rounded-lg">
                                     <Link href={`/operativo?area=${area.slug}`}>{area.name}</Link>
                                 </Button>
                             ))}
@@ -182,8 +166,7 @@ export default function Operations({ employee, activeArea, summary, events, task
                         />
                     )}
 
-                    {tab === 'load' && <LoadTab forms={forms} kitchenStockCatalog={kitchenStockCatalog} />}
-
+                    {tab === 'load' && <LoadTab forms={forms} />}
                     {tab === 'tasks' && <TasksTab tasks={tasks} />}
                 </div>
 
@@ -239,9 +222,7 @@ function HomeTab({
 
             <Section title="Alertas" count={notifications.length} icon={AlertTriangle}>
                 {notifications.length > 0 ? (
-                    notifications.map((notification) => (
-                        <ListItem key={notification.id} title={notification.title} detail={notification.body} status={notification.type} />
-                    ))
+                    notifications.map((notification) => <ListItem key={notification.id} title={notification.title} detail={notification.body} status={notification.type} />)
                 ) : (
                     <EmptyState text="Sin alertas activas." />
                 )}
@@ -249,7 +230,7 @@ function HomeTab({
 
             <Section title="Eventos de hoy" count={events.length} icon={ClipboardCheck}>
                 {events.length > 0 ? (
-                    events.map((event) => <ListItem key={event.id} title={`${event.time} · ${event.title}`} detail={event.detail} status={event.severity} />)
+                    events.map((event) => <ListItem key={event.id} title={`${event.time} / ${event.title}`} detail={event.detail} status={event.severity} />)
                 ) : (
                     <EmptyState text="Sin eventos para esta area." />
                 )}
@@ -263,34 +244,15 @@ function HomeTab({
     );
 }
 
-function LoadTab({ forms, kitchenStockCatalog }: { forms: OperationalForm[]; kitchenStockCatalog: KitchenStockCatalogItem[] }) {
+function LoadTab({ forms }: { forms: OperationalForm[] }) {
     return (
         <section className="grid gap-4">
-            <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Cargar datos</h2>
-            {kitchenStockCatalog.length > 0 && <KitchenStockCatalogPreview items={kitchenStockCatalog} />}
-            {forms.length > 0 ? forms.map((form) => <DynamicForm key={form.id} form={form} />) : <EmptyState text="No hay formularios activos para esta area." />}
+            <div className="grid gap-1">
+                <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Reportes rapidos</h2>
+                <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">Registra novedades del turno que no pertenecen a una tarea asignada.</p>
+            </div>
+            {forms.length > 0 ? forms.map((form) => <DynamicForm key={form.id} form={form} />) : <EmptyState text="No hay reportes activos para esta area." />}
         </section>
-    );
-}
-
-function KitchenStockCatalogPreview({ items }: { items: KitchenStockCatalogItem[] }) {
-    return (
-        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-            <CardHeader className="border-b border-neutral-200 p-4 dark:border-zinc-800">
-                <CardTitle className="text-base font-medium text-neutral-900 dark:text-zinc-50">Productos para conteo</CardTitle>
-            </CardHeader>
-            <CardContent className="grid max-h-72 gap-0 overflow-y-auto p-0">
-                {items.map((item) => (
-                    <div key={item.id} className="border-b border-neutral-200 p-4 last:border-b-0 dark:border-zinc-800">
-                        <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.productName}</p>
-                        <p className="mt-1 text-sm text-neutral-500 dark:text-zinc-400">
-                            {item.category} · {item.unit}
-                            {item.unitDetail ? ` · ${item.unitDetail}` : ''}
-                        </p>
-                    </div>
-                ))}
-            </CardContent>
-        </Card>
     );
 }
 
@@ -311,7 +273,6 @@ function DynamicForm({ form }: { form: OperationalForm }) {
 
     const submit: FormEventHandler = (event) => {
         event.preventDefault();
-
         post(route('employee.forms.entries.store', form.id), {
             preserveScroll: true,
             onSuccess: () => reset(),
@@ -373,10 +334,27 @@ function DynamicForm({ form }: { form: OperationalForm }) {
 }
 
 function TasksTab({ tasks }: { tasks: TaskItem[] }) {
+    const kitchenClosingTasks = tasks.filter((task) => task.kitchenClosing);
+    const regularTasks = tasks.filter((task) => !task.kitchenClosing);
+
     return (
         <section className="grid gap-4">
-            <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Tareas</h2>
-            {tasks.length > 0 ? tasks.map((task) => <TaskCard key={task.id} task={task} />) : <EmptyState text="Sin tareas para esta area." />}
+            <div className="grid gap-1">
+                <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Trabajo asignado</h2>
+                <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">Completa primero las tareas del turno. El cierre de cocina se hace aqui.</p>
+            </div>
+            {kitchenClosingTasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+            ))}
+            {regularTasks.length > 0 && (
+                <section className="grid gap-3">
+                    {kitchenClosingTasks.length > 0 && <h3 className="text-sm font-medium text-neutral-500 dark:text-zinc-400">Otras tareas</h3>}
+                    {regularTasks.map((task) => (
+                        <TaskCard key={task.id} task={task} />
+                    ))}
+                </section>
+            )}
+            {tasks.length === 0 && <EmptyState text="Sin tareas para esta area." />}
         </section>
     );
 }
@@ -441,6 +419,8 @@ function TaskCard({ task }: { task: TaskItem }) {
 }
 
 function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: KitchenClosing }) {
+    const categories = useMemo(() => Array.from(new Set(closing.items.map((item) => item.category))), [closing.items]);
+    const [activeCategory, setActiveCategory] = useState(categories[0] ?? '');
     const initialItems = useMemo(
         () =>
             closing.items.map((item) => ({
@@ -454,6 +434,9 @@ function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: Ki
     const { data, setData, post, processing } = useForm<{
         items: { stock_item_id: number; physical_count: string; waste_quantity: string; notes: string }[];
     }>({ items: initialItems });
+    const completedCount = data.items.filter((item) => String(item.physical_count).trim() !== '').length;
+    const visibleItems = closing.items.filter((item) => item.category === activeCategory);
+    const requiredReplenishments = closing.items.filter((item) => Number(item.replenishmentRequired ?? 0) > 0);
 
     const submitCount: FormEventHandler = (event) => {
         event.preventDefault();
@@ -466,65 +449,111 @@ function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: Ki
 
     return (
         <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-            <CardHeader className="border-b border-neutral-200 p-4 dark:border-zinc-800">
-                <CardTitle className="text-base font-medium text-neutral-900 dark:text-zinc-50">{task.title}</CardTitle>
-                <p className="text-sm text-neutral-500 dark:text-zinc-400">Día operativo {closing.operatingDate}</p>
+            <CardHeader className="grid gap-4 border-b border-neutral-200 p-4 dark:border-zinc-800">
+                <div className="flex items-start justify-between gap-3">
+                    <div className="grid gap-1">
+                        <CardTitle className="text-base font-medium text-neutral-900 dark:text-zinc-50">{task.title}</CardTitle>
+                        <p className="text-sm text-neutral-500 dark:text-zinc-400">Dia operativo {closing.operatingDate}</p>
+                    </div>
+                    <span className="rounded-lg bg-sky-100 px-2.5 py-1 text-xs font-medium text-sky-800 dark:bg-sky-950 dark:text-sky-200">
+                        {closing.status === 'pending_count' ? 'Paso 1' : closing.status === 'count_submitted' ? 'Paso 2' : 'Cerrado'}
+                    </span>
+                </div>
+                {closing.status === 'pending_count' && (
+                    <div className="grid gap-2">
+                        <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-zinc-400">
+                            <span>Conteo fisico</span>
+                            <span>
+                                {completedCount}/{closing.items.length}
+                            </span>
+                        </div>
+                        <div className="h-2 overflow-hidden rounded-full bg-neutral-200 dark:bg-zinc-800">
+                            <div
+                                className="h-full rounded-full bg-emerald-500"
+                                style={{ width: `${closing.items.length > 0 ? (completedCount / closing.items.length) * 100 : 0}%` }}
+                            />
+                        </div>
+                    </div>
+                )}
             </CardHeader>
             <CardContent className="grid gap-4 p-4">
                 {closing.status === 'pending_count' && (
                     <form onSubmit={submitCount} className="grid gap-4">
-                        {closing.items.map((item, index) => (
-                            <div key={item.id} className="grid gap-3 border-b border-neutral-200 pb-4 last:border-b-0 dark:border-zinc-800">
-                                <div>
-                                    <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.productName}</p>
-                                    <p className="mt-1 text-xs text-neutral-500 dark:text-zinc-400">
-                                        {item.category} · {item.unit}
-                                        {item.unitDetail ? ` · ${item.unitDetail}` : ''}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor={`count-${item.id}`}>Conteo físico</Label>
+                        <div className="flex gap-2 overflow-x-auto pb-1">
+                            {categories.map((category) => (
+                                <Button
+                                    key={category}
+                                    type="button"
+                                    variant={activeCategory === category ? 'default' : 'outline'}
+                                    className="h-9 shrink-0 rounded-lg"
+                                    onClick={() => setActiveCategory(category)}
+                                >
+                                    {category}
+                                </Button>
+                            ))}
+                        </div>
+                        <div className="grid gap-3">
+                            {visibleItems.map((item) => {
+                                const index = data.items.findIndex((row) => row.stock_item_id === item.stockItemId);
+
+                                return (
+                                    <div key={item.id} className="grid gap-3 rounded-lg border border-neutral-200 p-3 dark:border-zinc-800">
+                                        <div>
+                                            <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.productName}</p>
+                                            <p className="mt-1 text-xs text-neutral-500 dark:text-zinc-400">
+                                                {item.unit}
+                                                {item.unitDetail ? ` / ${item.unitDetail}` : ''}
+                                            </p>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div className="grid gap-2">
+                                                <Label htmlFor={`count-${item.id}`} className="text-xs">
+                                                    Conteo fisico
+                                                </Label>
+                                                <Input
+                                                    id={`count-${item.id}`}
+                                                    inputMode="decimal"
+                                                    value={data.items[index]?.physical_count ?? ''}
+                                                    onChange={(event) => {
+                                                        const items = [...data.items];
+                                                        items[index] = { ...items[index], physical_count: event.target.value };
+                                                        setData('items', items);
+                                                    }}
+                                                    required
+                                                    className="rounded-lg"
+                                                />
+                                            </div>
+                                            <div className="grid gap-2">
+                                                <Label htmlFor={`waste-${item.id}`} className="text-xs">
+                                                    Merma
+                                                </Label>
+                                                <Input
+                                                    id={`waste-${item.id}`}
+                                                    inputMode="decimal"
+                                                    value={data.items[index]?.waste_quantity ?? ''}
+                                                    onChange={(event) => {
+                                                        const items = [...data.items];
+                                                        items[index] = { ...items[index], waste_quantity: event.target.value };
+                                                        setData('items', items);
+                                                    }}
+                                                    className="rounded-lg"
+                                                />
+                                            </div>
+                                        </div>
                                         <Input
-                                            id={`count-${item.id}`}
-                                            inputMode="decimal"
-                                            value={data.items[index]?.physical_count ?? ''}
+                                            value={data.items[index]?.notes ?? ''}
                                             onChange={(event) => {
                                                 const items = [...data.items];
-                                                items[index] = { ...items[index], physical_count: event.target.value };
+                                                items[index] = { ...items[index], notes: event.target.value };
                                                 setData('items', items);
                                             }}
-                                            required
+                                            placeholder="Nota opcional"
                                             className="rounded-lg"
                                         />
                                     </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor={`waste-${item.id}`}>Merma</Label>
-                                        <Input
-                                            id={`waste-${item.id}`}
-                                            inputMode="decimal"
-                                            value={data.items[index]?.waste_quantity ?? ''}
-                                            onChange={(event) => {
-                                                const items = [...data.items];
-                                                items[index] = { ...items[index], waste_quantity: event.target.value };
-                                                setData('items', items);
-                                            }}
-                                            className="rounded-lg"
-                                        />
-                                    </div>
-                                </div>
-                                <Input
-                                    value={data.items[index]?.notes ?? ''}
-                                    onChange={(event) => {
-                                        const items = [...data.items];
-                                        items[index] = { ...items[index], notes: event.target.value };
-                                        setData('items', items);
-                                    }}
-                                    placeholder="Nota opcional"
-                                    className="rounded-lg"
-                                />
-                            </div>
-                        ))}
+                                );
+                            })}
+                        </div>
                         <Button type="submit" disabled={processing} className="rounded-lg">
                             {processing ? <LoaderCircle className="size-4 animate-spin" /> : <Send className="size-4" />}
                             Enviar conteo
@@ -534,10 +563,13 @@ function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: Ki
 
                 {closing.status === 'count_submitted' && (
                     <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">Reposicion desde bodega</p>
+                            <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">Saca exactamente las cantidades indicadas y confirma al terminar.</p>
+                        </div>
                         <div className="grid gap-0 overflow-hidden rounded-lg border border-neutral-200 dark:border-zinc-800">
-                            {closing.items
-                                .filter((item) => Number(item.replenishmentRequired ?? 0) > 0)
-                                .map((item) => (
+                            {requiredReplenishments.length > 0 ? (
+                                requiredReplenishments.map((item) => (
                                     <div key={item.id} className="flex items-center justify-between gap-3 border-b border-neutral-200 p-3 last:border-b-0 dark:border-zinc-800">
                                         <div className="min-w-0">
                                             <p className="truncate text-sm font-medium">{item.productName}</p>
@@ -545,19 +577,22 @@ function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: Ki
                                         </div>
                                         <span className="text-sm font-semibold text-neutral-900 dark:text-zinc-50">{item.replenishmentRequired}</span>
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <p className="p-4 text-sm text-neutral-500 dark:text-zinc-400">No hay productos para reponer.</p>
+                            )}
                         </div>
                         <Button type="button" onClick={confirmReplenishment} className="rounded-lg">
-                            Confirmar reposición
+                            Confirmar reposicion
                         </Button>
                     </div>
                 )}
 
                 {closing.status === 'closed' && (
                     <div className="grid gap-2">
-                        <ListItem title="Cierre completado" detail="La reposición fue verificada y el inventario inicial del nuevo día quedó registrado." status="completed" />
+                        <ListItem title="Cierre completado" detail="La reposicion fue verificada y el inventario inicial del nuevo dia quedo registrado." status="completed" />
                         {closing.hasReplenishmentAlert && (
-                            <ListItem title="Alerta de reposición" detail="Lo real egresado no coincide con lo requerido. Gerencia puede auditar el detalle." status="high" />
+                            <ListItem title="Alerta de reposicion" detail="Lo real egresado no coincide con lo requerido. Gerencia puede auditar el detalle." status="high" />
                         )}
                     </div>
                 )}
