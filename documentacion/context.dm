@@ -289,3 +289,10 @@ Areas operativas base:
 - Nochero.
 
 Esta decision queda detallada en `documentacion/gerencia-areas-accesos.dm`.
+
+## Sincronizaciones externas
+
+- Supabase legado: `frontier:sync-legacy-room-occupancy` corre cada hora en `America/Guayaquil` para mantener ocupacion/habitaciones actualizadas.
+- Google Sheets inventario: `frontier:sync-google-inventory` y `frontier:sync-kitchen-inventory-movements` corren cada hora para resumen de inventario y movimientos de cocina/bodega.
+- Contifico restaurante: `frontier:sync-contifico-restaurant --period=month` corre cada 3 horas en `America/Guayaquil` para mantener ventas, compras, cuentas por pagar y productos disponibles en el modulo Restaurante.
+- El cierre de cocina `frontier:create-kitchen-inventory-closing` corre diario a la 1am y pertenece al dia operativo anterior.

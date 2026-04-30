@@ -10,14 +10,22 @@ Artisan::command('inspire', function () {
 
 Schedule::command('frontier:sync-legacy-room-occupancy')
     ->hourly()
+    ->timezone('America/Guayaquil')
     ->withoutOverlapping();
 
 Schedule::command('frontier:sync-google-inventory')
     ->hourly()
+    ->timezone('America/Guayaquil')
     ->withoutOverlapping();
 
 Schedule::command('frontier:sync-kitchen-inventory-movements')
     ->hourly()
+    ->timezone('America/Guayaquil')
+    ->withoutOverlapping();
+
+Schedule::command('frontier:sync-contifico-restaurant --period=month')
+    ->everyThreeHours()
+    ->timezone('America/Guayaquil')
     ->withoutOverlapping();
 
 Schedule::command('frontier:create-kitchen-inventory-closing')
