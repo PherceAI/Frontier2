@@ -7,6 +7,9 @@ use App\Domain\Operations\Models\OperationalForm;
 use App\Domain\Operations\Models\OperationalNotification;
 use App\Domain\Operations\Models\OperationalTask;
 use App\Domain\Organization\Models\Area;
+use App\Domain\Restaurant\Models\KitchenDailyStockItem;
+use App\Domain\Restaurant\Models\KitchenInventoryClosing;
+use App\Domain\Restaurant\Models\KitchenInventoryClosingItem;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -61,6 +64,7 @@ class GetEmployeeOperationalPortal
                 'assignedArea' => $task->assignedArea?->name,
                 'canComplete' => $this->permissions->complete($user, $task),
                 'canValidate' => $task->status === OperationalTask::STATUS_PENDING_VALIDATION && $this->permissions->validate($user, $task),
+                'kitchenClosing' => $this->kitchenClosingData($task),
             ])->values(),
             'forms' => $forms->map(fn (OperationalForm $form): array => [
                 'id' => $form->id,
@@ -76,6 +80,7 @@ class GetEmployeeOperationalPortal
                 'body' => $notification->body,
                 'scheduledAt' => $notification->scheduled_at?->toIso8601String(),
             ])->values(),
+            'kitchenStockCatalog' => $this->kitchenStockCatalog($activeArea),
             'criticalSupplies' => $this->criticalSuppliesFromEvents($events),
         ];
     }
@@ -192,6 +197,91 @@ class GetEmployeeOperationalPortal
             'name' => $area->name,
             'slug' => $area->slug,
         ];
+    }
+
+    /**
+     * @return array<int, array{id: int, category: string, productName: string, unit: string, unitDetail: string|null}>
+     */
+    private function kitchenStockCatalog(?Area $area): array
+    {
+        if ($area?->slug !== 'restaurant') {
+            return [];
+        }
+
+        return KitchenDailyStockItem::query()
+            ->where('is_active', true)
+            ->orderBy('category')
+            ->orderBy('product_name')
+            ->get()
+            ->map(fn (KitchenDailyStockItem $item): array => [
+                'id' => $item->id,
+                'category' => $item->category,
+                'productName' => $item->product_name,
+                'unit' => $item->unit,
+                'unitDetail' => $item->unit_detail,
+            ])
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function kitchenClosingData(OperationalTask $task): ?array
+    {
+        if ($task->type !== 'kitchen_inventory_closing') {
+            return null;
+        }
+
+        $closingId = $task->metadata['closing_id'] ?? null;
+        $closing = KitchenInventoryClosing::query()
+            ->with('items')
+            ->when($closingId, fn ($query) => $query->whereKey($closingId))
+            ->when(! $closingId, fn ($query) => $query->where('operational_task_id', $task->id))
+            ->first();
+
+        if (! $closing) {
+            return null;
+        }
+
+        return [
+            'id' => $closing->id,
+            'status' => $closing->status,
+            'operatingDate' => $closing->operating_date->toDateString(),
+            'hasNegativeDiscrepancy' => $closing->has_negative_discrepancy,
+            'hasReplenishmentAlert' => $closing->has_replenishment_alert,
+            'items' => $closing->items
+                ->sortBy([['category_snapshot', 'asc'], ['product_name_snapshot', 'asc']])
+                ->map(fn (KitchenInventoryClosingItem $item): array => $this->kitchenClosingItemData($closing, $item))
+                ->values()
+                ->all(),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function kitchenClosingItemData(KitchenInventoryClosing $closing, KitchenInventoryClosingItem $item): array
+    {
+        $data = [
+            'id' => $item->id,
+            'stockItemId' => $item->kitchen_daily_stock_item_id,
+            'category' => $item->category_snapshot,
+            'productName' => $item->product_name_snapshot,
+            'unit' => $item->unit_snapshot,
+            'unitDetail' => $item->unit_detail_snapshot,
+            'physicalCount' => $item->physical_count,
+            'wasteQuantity' => $item->waste_quantity,
+            'notes' => $item->notes,
+        ];
+
+        if ($closing->status !== KitchenInventoryClosing::STATUS_PENDING_COUNT) {
+            $data['replenishmentRequired'] = $item->replenishment_required;
+            $data['replenishmentActual'] = $item->replenishment_actual;
+            $data['hasReplenishmentAlert'] = $item->has_replenishment_alert;
+        }
+
+        return $data;
     }
 
     private function statusLabel(string $status): string

@@ -9,4 +9,6 @@ Route::middleware(['auth', 'area.assigned'])->group(function () {
     Route::patch('operativo/tasks/{task}/complete', [EmployeeHomeController::class, 'completeTask'])->name('employee.tasks.complete');
     Route::patch('operativo/tasks/{task}/validate', [EmployeeHomeController::class, 'validateTask'])->name('employee.tasks.validate');
     Route::post('operativo/kitchen/shortages', [EmployeeHomeController::class, 'reportSupplyShortage'])->name('employee.kitchen.shortages.store');
+    Route::post('operativo/kitchen-closings/{closing}/count', [EmployeeHomeController::class, 'submitKitchenClosingCount'])->name('employee.kitchen-closings.count');
+    Route::post('operativo/kitchen-closings/{closing}/replenishment', [EmployeeHomeController::class, 'confirmKitchenClosingReplenishment'])->name('employee.kitchen-closings.replenishment');
 });

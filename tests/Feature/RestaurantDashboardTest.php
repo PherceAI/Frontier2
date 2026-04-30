@@ -4,9 +4,11 @@ namespace Tests\Feature;
 
 use App\Domain\Organization\Models\Area;
 use App\Domain\Restaurant\Actions\GetRestaurantDashboard;
+use App\Domain\Restaurant\Actions\ImportKitchenDailyStockFromDocx;
 use App\Domain\Restaurant\Actions\ImportStandardRecipesFromCsv;
 use App\Domain\Restaurant\Integrations\ContificoClient;
 use App\Domain\Restaurant\Models\ContificoDocument;
+use App\Domain\Restaurant\Models\KitchenDailyStockItem;
 use App\Domain\Restaurant\Models\StandardRecipe;
 use App\Domain\Restaurant\Models\StandardRecipeItem;
 use App\Models\User;
@@ -176,6 +178,54 @@ class RestaurantDashboardTest extends TestCase
         ]);
     }
 
+    public function test_kitchen_daily_stock_docx_can_be_imported_rendered_and_edited(): void
+    {
+        $this->withoutVite();
+
+        $path = storage_path('framework/testing/kitchen-stock.docx');
+        File::ensureDirectoryExists(dirname($path));
+        $this->writeKitchenStockDocx($path);
+
+        $summary = app(ImportKitchenDailyStockFromDocx::class)->handle($path);
+
+        $this->assertSame(['items' => 3, 'categories' => 3], $summary);
+        $this->assertDatabaseHas('kitchen_daily_stock_items', [
+            'category' => 'CARNES',
+            'product_name' => 'Carne lomo fino 225g',
+            'target_stock' => '20.0000',
+            'unit' => 'UND',
+            'unit_detail' => '225 GR',
+            'is_active' => true,
+        ]);
+
+        $manager = $this->createAssignedManager();
+        $this->actingAs($manager);
+        $item = KitchenDailyStockItem::query()->where('product_name', 'Arroz')->firstOrFail();
+
+        $this->get('/kitchen-stock')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('restaurant/kitchen-stock')
+                ->where('summary.items', 3)
+                ->where('summary.active', 3)
+                ->where('summary.categories', 3)
+                ->has('items', 3));
+
+        $this->patch(route('kitchen-stock.update', $item), [
+            'category' => 'OTROS',
+            'product_name' => 'Arroz flor',
+            'target_stock' => 16,
+            'unit' => 'LB',
+            'unit_detail' => null,
+            'is_active' => true,
+        ])->assertRedirect();
+
+        $this->assertDatabaseHas('kitchen_daily_stock_items', [
+            'product_name' => 'Arroz flor',
+            'target_stock' => '16.0000',
+        ]);
+    }
+
     /**
      * @param  array<string, mixed>  $attributes
      */
@@ -219,5 +269,32 @@ class RestaurantDashboardTest extends TestCase
         ]);
 
         return $user;
+    }
+
+    private function writeKitchenStockDocx(string $path): void
+    {
+        $documentXml = <<<'XML'
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:tbl>
+      <w:tr><w:tc><w:p><w:r><w:t>STOCK DIARIO COCINA Fecha ( )</w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>PRODUCTO</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>STOCK MINIMO</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>STOCK ACTUAL</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>UNIDAD</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>DETALLE DE (U)</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>EGRESO</w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>CARNES</w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>Carne lomo fino 225g</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>20</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>UND</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>225 GR</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>DESAYUNOS</w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>Huevos Cocina</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>30</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>UND</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>OTROS</w:t></w:r></w:p></w:tc></w:tr>
+      <w:tr><w:tc><w:p><w:r><w:t>Arroz</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>14</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>LB</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t></w:t></w:r></w:p></w:tc></w:tr>
+    </w:tbl>
+  </w:body>
+</w:document>
+XML;
+
+        $zip = new \ZipArchive();
+        $zip->open($path, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+        $zip->addFromString('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="xml" ContentType="application/xml"/></Types>');
+        $zip->addFromString('word/document.xml', $documentXml);
+        $zip->close();
     }
 }

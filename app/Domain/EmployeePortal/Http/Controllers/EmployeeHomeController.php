@@ -3,12 +3,16 @@
 namespace App\Domain\EmployeePortal\Http\Controllers;
 
 use App\Domain\Operations\Actions\CompleteOperationalTask;
+use App\Domain\Operations\Actions\CanOperateOnTask;
 use App\Domain\Operations\Actions\GetEmployeeOperationalPortal;
 use App\Domain\Operations\Actions\ReportKitchenSupplyShortage;
 use App\Domain\Operations\Actions\SubmitOperationalForm;
 use App\Domain\Operations\Actions\ValidateOperationalTask;
 use App\Domain\Operations\Models\OperationalForm;
 use App\Domain\Operations\Models\OperationalTask;
+use App\Domain\Restaurant\Actions\ConfirmKitchenInventoryReplenishment;
+use App\Domain\Restaurant\Actions\SubmitKitchenInventoryCount;
+use App\Domain\Restaurant\Models\KitchenInventoryClosing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -73,5 +77,39 @@ class EmployeeHomeController extends Controller
         $reportShortage->handle($request->user(), $validated);
 
         return back()->with('status', 'shortage-reported');
+    }
+
+    public function submitKitchenClosingCount(
+        Request $request,
+        KitchenInventoryClosing $closing,
+        CanOperateOnTask $permissions,
+        SubmitKitchenInventoryCount $submitCount,
+    ): RedirectResponse {
+        abort_unless($closing->task && $permissions->complete($request->user(), $closing->task), 403);
+
+        $validated = $request->validate([
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.stock_item_id' => ['required', 'integer', 'exists:kitchen_daily_stock_items,id'],
+            'items.*.physical_count' => ['required', 'numeric', 'min:0'],
+            'items.*.waste_quantity' => ['nullable', 'numeric', 'min:0'],
+            'items.*.notes' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $submitCount->handle($request->user(), $closing, $validated['items']);
+
+        return back()->with('status', 'kitchen-count-submitted');
+    }
+
+    public function confirmKitchenClosingReplenishment(
+        Request $request,
+        KitchenInventoryClosing $closing,
+        CanOperateOnTask $permissions,
+        ConfirmKitchenInventoryReplenishment $confirmReplenishment,
+    ): RedirectResponse {
+        abort_unless($closing->task && $permissions->complete($request->user(), $closing->task), 403);
+
+        $confirmReplenishment->handle($request->user(), $closing);
+
+        return back()->with('status', 'kitchen-replenishment-confirmed');
     }
 }

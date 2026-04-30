@@ -6,6 +6,7 @@ use App\Domain\Operations\Models\OperationalEvent;
 use App\Domain\Operations\Models\OperationalForm;
 use App\Domain\Operations\Models\OperationalTask;
 use App\Domain\Organization\Models\Area;
+use App\Domain\Restaurant\Models\KitchenDailyStockItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -257,6 +258,31 @@ class EmployeePortalTest extends TestCase
             'user_id' => $user->id,
             'status' => 'submitted',
         ]);
+    }
+
+    public function test_kitchen_stock_catalog_is_visible_without_target_stock_for_blind_count(): void
+    {
+        [$user] = $this->createKitchenEmployee();
+        KitchenDailyStockItem::create([
+            'category' => 'OTROS',
+            'product_name' => 'Arroz',
+            'target_stock' => 14,
+            'unit' => 'LB',
+            'unit_detail' => null,
+            'is_active' => true,
+            'imported_at' => now(),
+        ]);
+
+        $this->actingAs($user);
+
+        $this->get('/operativo')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('employee/operations')
+                ->where('kitchenStockCatalog.0.productName', 'Arroz')
+                ->where('kitchenStockCatalog.0.unit', 'LB')
+                ->missing('kitchenStockCatalog.0.target_stock')
+                ->missing('kitchenStockCatalog.0.targetStock'));
     }
 
     /**

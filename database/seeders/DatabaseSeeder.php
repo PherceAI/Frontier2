@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Eventos', 'slug' => 'events', 'description' => 'Grupos, agenda, requerimientos y coordinacion interarea.'],
             ['name' => 'Cocina / Restaurante', 'slug' => 'restaurant', 'description' => 'Menus, produccion, requerimientos e insumos.'],
             ['name' => 'Camareras', 'slug' => 'waitstaff', 'description' => 'Atencion operativa de eventos y restaurante.'],
+            ['name' => 'Nochero', 'slug' => 'night_auditor', 'description' => 'Turno nocturno, rondas, novedades, cierres y soporte operativo fuera de horario.'],
         ])->map(fn (array $area) => Area::firstOrCreate(
             ['slug' => $area['slug']],
             ['name' => $area['name'], 'description' => $area['description'], 'is_active' => true],

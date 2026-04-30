@@ -286,5 +286,6 @@ Areas operativas base:
 - Eventos.
 - Cocina / Restaurante.
 - Camareras.
+- Nochero.
 
 Esta decision queda detallada en `documentacion/gerencia-areas-accesos.dm`.

@@ -67,7 +67,7 @@ class GetManagementModuleOverview
                 metrics: ModuleMetricData::collect([
                     new ModuleMetricData('Empleados activos', '0', 'Pendiente de carga'),
                     new ModuleMetricData('Pendientes de area', '0', 'Esperando asignacion'),
-                    new ModuleMetricData('Areas operativas', '11', 'Seed inicial definido'),
+                    new ModuleMetricData('Areas operativas', '12', 'Seed inicial definido'),
                 ], DataCollection::class),
                 nextSteps: [
                     'Crear pantalla gerencial para asignar una o varias areas por empleado.',

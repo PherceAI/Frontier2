@@ -75,6 +75,7 @@ Las areas iniciales de Frontier son:
 - Eventos.
 - Cocina / Restaurante.
 - Camareras.
+- Nochero.
 
 Estas areas representan el mapa operacional inicial del hotel-restaurante.
 

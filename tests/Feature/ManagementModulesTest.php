@@ -74,6 +74,18 @@ class ManagementModulesTest extends TestCase
         $this->assertTrue($employee->hasRole('employee'));
     }
 
+    public function test_database_seeder_creates_nochero_area(): void
+    {
+        $this->seed();
+
+        $this->assertDatabaseHas('areas', [
+            'name' => 'Nochero',
+            'slug' => 'night_auditor',
+            'is_active' => true,
+        ]);
+        $this->assertSame(12, Area::query()->count());
+    }
+
     private function createAssignedManager(): User
     {
         $user = User::factory()->create(['operational_status' => 'active']);

@@ -36,6 +36,31 @@ type TaskItem = {
     assignedArea: string | null;
     canComplete: boolean;
     canValidate: boolean;
+    kitchenClosing: KitchenClosing | null;
+};
+
+type KitchenClosingItem = {
+    id: number;
+    stockItemId: number;
+    category: string;
+    productName: string;
+    unit: string;
+    unitDetail: string | null;
+    physicalCount: string | null;
+    wasteQuantity: string | null;
+    notes: string | null;
+    replenishmentRequired?: string | null;
+    replenishmentActual?: string | null;
+    hasReplenishmentAlert?: boolean;
+};
+
+type KitchenClosing = {
+    id: number;
+    status: 'pending_count' | 'count_submitted' | 'closed' | string;
+    operatingDate: string;
+    hasNegativeDiscrepancy: boolean;
+    hasReplenishmentAlert: boolean;
+    items: KitchenClosingItem[];
 };
 
 type FormField = {
@@ -62,6 +87,14 @@ type NotificationItem = {
     body: string | null;
 };
 
+type KitchenStockCatalogItem = {
+    id: number;
+    category: string;
+    productName: string;
+    unit: string;
+    unitDetail: string | null;
+};
+
 type PortalProps = {
     employee: {
         name: string;
@@ -79,6 +112,7 @@ type PortalProps = {
     tasks: TaskItem[];
     forms: OperationalForm[];
     notifications: NotificationItem[];
+    kitchenStockCatalog: KitchenStockCatalogItem[];
 };
 
 type Tab = 'home' | 'load' | 'tasks';
@@ -99,7 +133,7 @@ function statusDot(status: string) {
     return 'bg-sky-500';
 }
 
-export default function Operations({ employee, activeArea, summary, events, tasks, forms, notifications }: PortalProps) {
+export default function Operations({ employee, activeArea, summary, events, tasks, forms, notifications, kitchenStockCatalog }: PortalProps) {
     const [tab, setTab] = useState<Tab>('home');
 
     const activeTasks = tasks.filter((task) => !['completed', 'validated', 'cancelled'].includes(task.rawStatus));
@@ -148,7 +182,7 @@ export default function Operations({ employee, activeArea, summary, events, task
                         />
                     )}
 
-                    {tab === 'load' && <LoadTab forms={forms} />}
+                    {tab === 'load' && <LoadTab forms={forms} kitchenStockCatalog={kitchenStockCatalog} />}
 
                     {tab === 'tasks' && <TasksTab tasks={tasks} />}
                 </div>
@@ -229,12 +263,34 @@ function HomeTab({
     );
 }
 
-function LoadTab({ forms }: { forms: OperationalForm[] }) {
+function LoadTab({ forms, kitchenStockCatalog }: { forms: OperationalForm[]; kitchenStockCatalog: KitchenStockCatalogItem[] }) {
     return (
         <section className="grid gap-4">
             <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Cargar datos</h2>
+            {kitchenStockCatalog.length > 0 && <KitchenStockCatalogPreview items={kitchenStockCatalog} />}
             {forms.length > 0 ? forms.map((form) => <DynamicForm key={form.id} form={form} />) : <EmptyState text="No hay formularios activos para esta area." />}
         </section>
+    );
+}
+
+function KitchenStockCatalogPreview({ items }: { items: KitchenStockCatalogItem[] }) {
+    return (
+        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
+            <CardHeader className="border-b border-neutral-200 p-4 dark:border-zinc-800">
+                <CardTitle className="text-base font-medium text-neutral-900 dark:text-zinc-50">Productos para conteo</CardTitle>
+            </CardHeader>
+            <CardContent className="grid max-h-72 gap-0 overflow-y-auto p-0">
+                {items.map((item) => (
+                    <div key={item.id} className="border-b border-neutral-200 p-4 last:border-b-0 dark:border-zinc-800">
+                        <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.productName}</p>
+                        <p className="mt-1 text-sm text-neutral-500 dark:text-zinc-400">
+                            {item.category} · {item.unit}
+                            {item.unitDetail ? ` · ${item.unitDetail}` : ''}
+                        </p>
+                    </div>
+                ))}
+            </CardContent>
+        </Card>
     );
 }
 
@@ -326,6 +382,10 @@ function TasksTab({ tasks }: { tasks: TaskItem[] }) {
 }
 
 function TaskCard({ task }: { task: TaskItem }) {
+    if (task.kitchenClosing) {
+        return <KitchenClosingTaskCard task={task} closing={task.kitchenClosing} />;
+    }
+
     const completeTask = () => {
         router.patch(route('employee.tasks.complete', task.id), { notes: `Completado desde portal operativo: ${task.title}` }, { preserveScroll: true });
     };
@@ -373,6 +433,132 @@ function TaskCard({ task }: { task: TaskItem }) {
                         <Button type="button" variant="outline" className="rounded-lg" onClick={() => validateTask('rejected')}>
                             Rechazar
                         </Button>
+                    </div>
+                )}
+            </CardContent>
+        </Card>
+    );
+}
+
+function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: KitchenClosing }) {
+    const initialItems = useMemo(
+        () =>
+            closing.items.map((item) => ({
+                stock_item_id: item.stockItemId,
+                physical_count: item.physicalCount ?? '',
+                waste_quantity: item.wasteQuantity ?? '',
+                notes: item.notes ?? '',
+            })),
+        [closing.items],
+    );
+    const { data, setData, post, processing } = useForm<{
+        items: { stock_item_id: number; physical_count: string; waste_quantity: string; notes: string }[];
+    }>({ items: initialItems });
+
+    const submitCount: FormEventHandler = (event) => {
+        event.preventDefault();
+        post(route('employee.kitchen-closings.count', closing.id), { preserveScroll: true });
+    };
+
+    const confirmReplenishment = () => {
+        router.post(route('employee.kitchen-closings.replenishment', closing.id), {}, { preserveScroll: true });
+    };
+
+    return (
+        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
+            <CardHeader className="border-b border-neutral-200 p-4 dark:border-zinc-800">
+                <CardTitle className="text-base font-medium text-neutral-900 dark:text-zinc-50">{task.title}</CardTitle>
+                <p className="text-sm text-neutral-500 dark:text-zinc-400">Día operativo {closing.operatingDate}</p>
+            </CardHeader>
+            <CardContent className="grid gap-4 p-4">
+                {closing.status === 'pending_count' && (
+                    <form onSubmit={submitCount} className="grid gap-4">
+                        {closing.items.map((item, index) => (
+                            <div key={item.id} className="grid gap-3 border-b border-neutral-200 pb-4 last:border-b-0 dark:border-zinc-800">
+                                <div>
+                                    <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.productName}</p>
+                                    <p className="mt-1 text-xs text-neutral-500 dark:text-zinc-400">
+                                        {item.category} · {item.unit}
+                                        {item.unitDetail ? ` · ${item.unitDetail}` : ''}
+                                    </p>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor={`count-${item.id}`}>Conteo físico</Label>
+                                        <Input
+                                            id={`count-${item.id}`}
+                                            inputMode="decimal"
+                                            value={data.items[index]?.physical_count ?? ''}
+                                            onChange={(event) => {
+                                                const items = [...data.items];
+                                                items[index] = { ...items[index], physical_count: event.target.value };
+                                                setData('items', items);
+                                            }}
+                                            required
+                                            className="rounded-lg"
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor={`waste-${item.id}`}>Merma</Label>
+                                        <Input
+                                            id={`waste-${item.id}`}
+                                            inputMode="decimal"
+                                            value={data.items[index]?.waste_quantity ?? ''}
+                                            onChange={(event) => {
+                                                const items = [...data.items];
+                                                items[index] = { ...items[index], waste_quantity: event.target.value };
+                                                setData('items', items);
+                                            }}
+                                            className="rounded-lg"
+                                        />
+                                    </div>
+                                </div>
+                                <Input
+                                    value={data.items[index]?.notes ?? ''}
+                                    onChange={(event) => {
+                                        const items = [...data.items];
+                                        items[index] = { ...items[index], notes: event.target.value };
+                                        setData('items', items);
+                                    }}
+                                    placeholder="Nota opcional"
+                                    className="rounded-lg"
+                                />
+                            </div>
+                        ))}
+                        <Button type="submit" disabled={processing} className="rounded-lg">
+                            {processing ? <LoaderCircle className="size-4 animate-spin" /> : <Send className="size-4" />}
+                            Enviar conteo
+                        </Button>
+                    </form>
+                )}
+
+                {closing.status === 'count_submitted' && (
+                    <div className="grid gap-4">
+                        <div className="grid gap-0 overflow-hidden rounded-lg border border-neutral-200 dark:border-zinc-800">
+                            {closing.items
+                                .filter((item) => Number(item.replenishmentRequired ?? 0) > 0)
+                                .map((item) => (
+                                    <div key={item.id} className="flex items-center justify-between gap-3 border-b border-neutral-200 p-3 last:border-b-0 dark:border-zinc-800">
+                                        <div className="min-w-0">
+                                            <p className="truncate text-sm font-medium">{item.productName}</p>
+                                            <p className="text-xs text-neutral-500 dark:text-zinc-400">{item.unit}</p>
+                                        </div>
+                                        <span className="text-sm font-semibold text-neutral-900 dark:text-zinc-50">{item.replenishmentRequired}</span>
+                                    </div>
+                                ))}
+                        </div>
+                        <Button type="button" onClick={confirmReplenishment} className="rounded-lg">
+                            Confirmar reposición
+                        </Button>
+                    </div>
+                )}
+
+                {closing.status === 'closed' && (
+                    <div className="grid gap-2">
+                        <ListItem title="Cierre completado" detail="La reposición fue verificada y el inventario inicial del nuevo día quedó registrado." status="completed" />
+                        {closing.hasReplenishmentAlert && (
+                            <ListItem title="Alerta de reposición" detail="Lo real egresado no coincide con lo requerido. Gerencia puede auditar el detalle." status="high" />
+                        )}
                     </div>
                 )}
             </CardContent>
