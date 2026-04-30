@@ -35,7 +35,7 @@ class Area extends Model
     public function employees(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->withPivot(['assigned_by', 'assigned_at', 'is_active'])
+            ->withPivot(['assigned_by', 'assigned_at', 'is_active', 'is_lead'])
             ->withTimestamps();
     }
 

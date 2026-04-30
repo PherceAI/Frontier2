@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use App\Domain\Organization\Models\Area;
 use App\Domain\Operations\Models\OperationalTask;
+use App\Domain\Organization\Models\Area;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, HasPushSubscriptions, HasRoles, Notifiable;
 
     /**
@@ -59,7 +60,7 @@ class User extends Authenticatable
     public function areas(): BelongsToMany
     {
         return $this->belongsToMany(Area::class)
-            ->withPivot(['assigned_by', 'assigned_at', 'is_active'])
+            ->withPivot(['assigned_by', 'assigned_at', 'is_active', 'is_lead'])
             ->withTimestamps();
     }
 
@@ -81,6 +82,14 @@ class User extends Authenticatable
         return $this->hasRole('administrator')
             || $this->hasRole('management')
             || $this->activeAreas()->where('areas.slug', 'management')->exists();
+    }
+
+    public function leadsArea(int $areaId): bool
+    {
+        return $this->activeAreas()
+            ->whereKey($areaId)
+            ->wherePivot('is_lead', true)
+            ->exists();
     }
 
     public function operationalHomeRoute(): string

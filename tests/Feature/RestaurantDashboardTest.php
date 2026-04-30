@@ -4,12 +4,16 @@ namespace Tests\Feature;
 
 use App\Domain\Organization\Models\Area;
 use App\Domain\Restaurant\Actions\GetRestaurantDashboard;
+use App\Domain\Restaurant\Actions\ImportStandardRecipesFromCsv;
 use App\Domain\Restaurant\Integrations\ContificoClient;
 use App\Domain\Restaurant\Models\ContificoDocument;
+use App\Domain\Restaurant\Models\StandardRecipe;
+use App\Domain\Restaurant\Models\StandardRecipeItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -104,6 +108,72 @@ class RestaurantDashboardTest extends TestCase
 
         $this->assertCount(3, $documents);
         Http::assertSentCount(2);
+    }
+
+    public function test_standard_recipes_can_be_imported_rendered_and_edited(): void
+    {
+        $this->withoutVite();
+
+        $csv = implode("\n", [
+            'ID_PLATO,NOMBRE_PLATO,CATEGORIA,SUBCATEGORIA,ID_PRODUCTO_INVENTARIO,NOMBRE_PRODUCTO_INVENTARIO,CANTIDAD_USADA,UNIDAD_MEDIDA,EQUIVALENCIA',
+            'MP,MENU ALMUERZO A,MENÚ,CARNE BLANCA,,ARROZ,85,GRAMOS,',
+            'MP,MENU ALMUERZO A,MENÚ,CARNE BLANCA,,POLLO,0.5,PORCIÓN,110g',
+        ]);
+        $path = storage_path('framework/testing/standard-recipes.csv');
+        File::ensureDirectoryExists(dirname($path));
+        File::put($path, $csv);
+
+        $summary = app(ImportStandardRecipesFromCsv::class)->handle($path);
+
+        $this->assertSame(['recipes' => 1, 'items' => 2], $summary);
+        $this->assertDatabaseHas('restaurant_standard_recipes', [
+            'dish_code' => 'MP',
+            'dish_name' => 'MENU ALMUERZO A',
+        ]);
+        $this->assertDatabaseHas('restaurant_standard_recipe_items', [
+            'inventory_product_name' => 'ARROZ',
+            'quantity_used' => '85.0000',
+            'unit' => 'GRAMOS',
+        ]);
+
+        $manager = $this->createAssignedManager();
+        $this->actingAs($manager);
+
+        $recipe = StandardRecipe::query()->firstOrFail();
+        $item = StandardRecipeItem::query()->where('inventory_product_name', 'ARROZ')->firstOrFail();
+
+        $this->get('/recipes')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('restaurant/recipes')
+                ->where('summary.recipes', 1)
+                ->where('summary.items', 2)
+                ->where('recipes.0.dish_name', 'MENU ALMUERZO A'));
+
+        $this->patch(route('recipes.update', $recipe), [
+            'dish_code' => 'MP',
+            'dish_name' => 'MENU ALMUERZO EDITADO',
+            'category' => 'MENÚ',
+            'subcategory' => 'CARNE BLANCA',
+            'is_active' => true,
+        ])->assertRedirect();
+
+        $this->patch(route('recipe-items.update', $item), [
+            'inventory_product_id' => null,
+            'inventory_product_name' => 'ARROZ FLOR',
+            'quantity_used' => 90,
+            'unit' => 'GRAMOS',
+            'equivalence' => null,
+            'notes' => null,
+        ])->assertRedirect();
+
+        $this->assertDatabaseHas('restaurant_standard_recipes', [
+            'dish_name' => 'MENU ALMUERZO EDITADO',
+        ]);
+        $this->assertDatabaseHas('restaurant_standard_recipe_items', [
+            'inventory_product_name' => 'ARROZ FLOR',
+            'quantity_used' => '90.0000',
+        ]);
     }
 
     /**

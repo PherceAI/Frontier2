@@ -3,8 +3,11 @@
 namespace App\Domain\EmployeePortal\Http\Controllers;
 
 use App\Domain\Operations\Actions\CompleteOperationalTask;
-use App\Domain\Operations\Actions\GetKitchenOperationalPortal;
+use App\Domain\Operations\Actions\GetEmployeeOperationalPortal;
 use App\Domain\Operations\Actions\ReportKitchenSupplyShortage;
+use App\Domain\Operations\Actions\SubmitOperationalForm;
+use App\Domain\Operations\Actions\ValidateOperationalTask;
+use App\Domain\Operations\Models\OperationalForm;
 use App\Domain\Operations\Models\OperationalTask;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -14,25 +17,12 @@ use Inertia\Response;
 
 class EmployeeHomeController extends Controller
 {
-    public function __invoke(Request $request, GetKitchenOperationalPortal $kitchenPortal): Response
+    public function __invoke(Request $request, GetEmployeeOperationalPortal $portal): Response
     {
-        $user = $request->user();
-        $areas = $user->activeAreas()->orderBy('name')->get(['areas.id', 'areas.name', 'areas.slug']);
-
-        if ($areas->contains('slug', 'restaurant')) {
-            return Inertia::render('employee/kitchen', $kitchenPortal->handle($user));
-        }
-
-        return Inertia::render('employee/home', [
-            'employee' => [
-                'name' => $user->name,
-                'areas' => $areas->map(fn ($area): array => [
-                    'id' => $area->id,
-                    'name' => $area->name,
-                    'slug' => $area->slug,
-                ])->values(),
-            ],
-        ]);
+        return Inertia::render('employee/operations', $portal->handle(
+            $request->user(),
+            $request->string('area')->toString() ?: null,
+        ));
     }
 
     public function completeTask(Request $request, OperationalTask $task, CompleteOperationalTask $completeTask): RedirectResponse
@@ -46,6 +36,30 @@ class EmployeeHomeController extends Controller
         $completeTask->handle($request->user(), $task, $validated);
 
         return back()->with('status', 'task-completed');
+    }
+
+    public function validateTask(Request $request, OperationalTask $task, ValidateOperationalTask $validateTask): RedirectResponse
+    {
+        $validated = $request->validate([
+            'decision' => ['required', 'string', 'in:validated,rejected'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $validateTask->handle($request->user(), $task, $validated['decision'], $validated['notes'] ?? null);
+
+        return back()->with('status', 'task-validated');
+    }
+
+    public function submitForm(Request $request, OperationalForm $form, SubmitOperationalForm $submitForm): RedirectResponse
+    {
+        $validated = $request->validate([
+            'fields' => ['array'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $submitForm->handle($request->user(), $form, $validated);
+
+        return back()->with('status', 'form-submitted');
     }
 
     public function reportSupplyShortage(Request $request, ReportKitchenSupplyShortage $reportShortage): RedirectResponse

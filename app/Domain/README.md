@@ -10,6 +10,7 @@ Current modules:
 - `Billing`: invoices, charges, payments and account closeout.
 - `Auth`: users, roles, permissions and security workflows.
 - `Management`: owner-facing operational dashboards and employee assignment.
+- `Inventory`: owner-facing inventory intelligence from Google Sheets Apps Script.
 - `Operations`: employee operational workflows, events, tasks, forms and notifications.
 - `EmployeePortal`: mobile-first employee entry points.
 - `Restaurant`: owner-facing restaurant intelligence from Contifico documents.

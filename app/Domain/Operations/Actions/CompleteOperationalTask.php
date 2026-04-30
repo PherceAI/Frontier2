@@ -9,12 +9,14 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class CompleteOperationalTask
 {
+    public function __construct(private readonly CanOperateOnTask $permissions) {}
+
     /**
-     * @param array<string, mixed> $payload
+     * @param  array<string, mixed>  $payload
      */
     public function handle(User $user, OperationalTask $task, array $payload = []): OperationalTask
     {
-        if (! $this->canComplete($user, $task)) {
+        if (! $this->permissions->complete($user, $task)) {
             throw new AuthorizationException('No puedes completar esta tarea.');
         }
 
@@ -52,18 +54,5 @@ class CompleteOperationalTask
         }
 
         return $task->refresh();
-    }
-
-    private function canComplete(User $user, OperationalTask $task): bool
-    {
-        if ($task->assigned_user_id) {
-            return $task->assigned_user_id === $user->id || $user->hasManagementAccess();
-        }
-
-        if (! $task->assigned_area_id) {
-            return $user->hasManagementAccess();
-        }
-
-        return $user->activeAreas()->whereKey($task->assigned_area_id)->exists();
     }
 }
