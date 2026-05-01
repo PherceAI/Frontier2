@@ -4,7 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Head, Link, router, useForm } from '@inertiajs/react';
-import { AlertTriangle, ClipboardCheck, FilePenLine, Home, ListChecks, LoaderCircle, LogOut, Send } from 'lucide-react';
+import { AlertTriangle, BedDouble, ClipboardCheck, FilePenLine, Home, ListChecks, LoaderCircle, LogOut, Send } from 'lucide-react';
 import { FormEventHandler, ReactNode, useMemo, useState } from 'react';
 
 type Area = {
@@ -62,6 +62,30 @@ type TaskItem = {
     kitchenClosing: KitchenClosing | null;
 };
 
+type RoomCleaning = {
+    id: number;
+    roomNumber: string;
+    floor: number;
+    roomType: string | null;
+    cleaningType: 'checkout' | 'stay' | string;
+    status: string;
+    rawStatus: string;
+    guestName: string | null;
+    companyName: string | null;
+    reservationCode: string | null;
+    checkInDate: string | null;
+    checkOutDate: string | null;
+    scheduledAt: string | null;
+    completedAt: string | null;
+    novelties: {
+        id: number;
+        severity: string;
+        body: string;
+        userName: string | null;
+        createdAt: string | null;
+    }[];
+};
+
 type FormField = {
     name: string;
     label?: string;
@@ -103,6 +127,7 @@ type PortalProps = {
     tasks: TaskItem[];
     forms: OperationalForm[];
     notifications: NotificationItem[];
+    roomCleanings: RoomCleaning[];
 };
 
 type Tab = 'home' | 'load' | 'tasks';
@@ -123,7 +148,7 @@ function statusDot(status: string) {
     return 'bg-sky-500';
 }
 
-export default function Operations({ employee, activeArea, summary, events, tasks, forms, notifications }: PortalProps) {
+export default function Operations({ employee, activeArea, summary, events, tasks, forms, notifications, roomCleanings }: PortalProps) {
     const [tab, setTab] = useState<Tab>('home');
     const activeTasks = tasks.filter((task) => !['completed', 'validated', 'cancelled'].includes(task.rawStatus));
     const completedTasks = tasks.filter((task) => ['completed', 'validated'].includes(task.rawStatus));
@@ -148,7 +173,12 @@ export default function Operations({ employee, activeArea, summary, events, task
                     {employee.areas.length > 1 && (
                         <div className="flex gap-2 overflow-x-auto pb-1">
                             {employee.areas.map((area) => (
-                                <Button key={area.id} asChild variant={activeArea?.slug === area.slug ? 'default' : 'outline'} className="h-9 shrink-0 rounded-lg">
+                                <Button
+                                    key={area.id}
+                                    asChild
+                                    variant={activeArea?.slug === area.slug ? 'default' : 'outline'}
+                                    className="h-9 shrink-0 rounded-lg"
+                                >
                                     <Link href={`/operativo?area=${area.slug}`}>{area.name}</Link>
                                 </Button>
                             ))}
@@ -163,11 +193,12 @@ export default function Operations({ employee, activeArea, summary, events, task
                             notifications={notifications}
                             activeTasks={activeTasks}
                             completedTasks={completedTasks}
+                            roomCleanings={roomCleanings}
                         />
                     )}
 
                     {tab === 'load' && <LoadTab forms={forms} />}
-                    {tab === 'tasks' && <TasksTab tasks={tasks} />}
+                    {tab === 'tasks' && <TasksTab tasks={tasks} roomCleanings={roomCleanings} />}
                 </div>
 
                 <nav className="fixed inset-x-0 bottom-0 border-t border-neutral-200 bg-white/95 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
@@ -189,6 +220,7 @@ function HomeTab({
     notifications,
     activeTasks,
     completedTasks,
+    roomCleanings,
 }: {
     employeeName: string;
     summary: PortalProps['summary'];
@@ -196,6 +228,7 @@ function HomeTab({
     notifications: NotificationItem[];
     activeTasks: TaskItem[];
     completedTasks: TaskItem[];
+    roomCleanings: RoomCleaning[];
 }) {
     return (
         <>
@@ -222,7 +255,9 @@ function HomeTab({
 
             <Section title="Alertas" count={notifications.length} icon={AlertTriangle}>
                 {notifications.length > 0 ? (
-                    notifications.map((notification) => <ListItem key={notification.id} title={notification.title} detail={notification.body} status={notification.type} />)
+                    notifications.map((notification) => (
+                        <ListItem key={notification.id} title={notification.title} detail={notification.body} status={notification.type} />
+                    ))
                 ) : (
                     <EmptyState text="Sin alertas activas." />
                 )}
@@ -230,13 +265,22 @@ function HomeTab({
 
             <Section title="Eventos de hoy" count={events.length} icon={ClipboardCheck}>
                 {events.length > 0 ? (
-                    events.map((event) => <ListItem key={event.id} title={`${event.time} / ${event.title}`} detail={event.detail} status={event.severity} />)
+                    events.map((event) => (
+                        <ListItem key={event.id} title={`${event.time} / ${event.title}`} detail={event.detail} status={event.severity} />
+                    ))
                 ) : (
                     <EmptyState text="Sin eventos para esta area." />
                 )}
             </Section>
 
             <Section title="Pulso de tareas" count={activeTasks.length + completedTasks.length} icon={ListChecks}>
+                {roomCleanings.length > 0 && (
+                    <ListItem
+                        title="Habitaciones asignadas"
+                        detail={`${roomCleanings.filter((task) => task.rawStatus !== 'completed').length} pendientes de limpieza`}
+                        status="pending"
+                    />
+                )}
                 <ListItem title="Pendientes activas" detail={`${activeTasks.length} por realizar o validar`} status="pending" />
                 <ListItem title="Completadas" detail={`${completedTasks.length} cerradas o validadas`} status="completed" />
             </Section>
@@ -249,9 +293,15 @@ function LoadTab({ forms }: { forms: OperationalForm[] }) {
         <section className="grid gap-4">
             <div className="grid gap-1">
                 <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Reportes rapidos</h2>
-                <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">Registra novedades del turno que no pertenecen a una tarea asignada.</p>
+                <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">
+                    Registra novedades del turno que no pertenecen a una tarea asignada.
+                </p>
             </div>
-            {forms.length > 0 ? forms.map((form) => <DynamicForm key={form.id} form={form} />) : <EmptyState text="No hay reportes activos para esta area." />}
+            {forms.length > 0 ? (
+                forms.map((form) => <DynamicForm key={form.id} form={form} />)
+            ) : (
+                <EmptyState text="No hay reportes activos para esta area." />
+            )}
         </section>
     );
 }
@@ -297,7 +347,7 @@ function DynamicForm({ form }: { form: OperationalForm }) {
                                     value={(data.fields[field.name] as string) ?? ''}
                                     onChange={(event) => setData('fields', { ...data.fields, [field.name]: event.target.value })}
                                     required={field.required}
-                                    className="min-h-24 rounded-lg border border-input bg-background px-3 py-2 text-sm"
+                                    className="border-input bg-background min-h-24 rounded-lg border px-3 py-2 text-sm"
                                 />
                             ) : field.type === 'checkbox' ? (
                                 <Checkbox
@@ -321,7 +371,12 @@ function DynamicForm({ form }: { form: OperationalForm }) {
                         <Label htmlFor={`${form.slug}-notes`} className="text-sm font-medium">
                             Notas
                         </Label>
-                        <Input id={`${form.slug}-notes`} value={data.notes} onChange={(event) => setData('notes', event.target.value)} className="rounded-lg" />
+                        <Input
+                            id={`${form.slug}-notes`}
+                            value={data.notes}
+                            onChange={(event) => setData('notes', event.target.value)}
+                            className="rounded-lg"
+                        />
                     </div>
                     <Button type="submit" disabled={processing} className="rounded-lg">
                         {processing ? <LoaderCircle className="size-4 animate-spin" /> : <Send className="size-4" />}
@@ -333,7 +388,7 @@ function DynamicForm({ form }: { form: OperationalForm }) {
     );
 }
 
-function TasksTab({ tasks }: { tasks: TaskItem[] }) {
+function TasksTab({ tasks, roomCleanings }: { tasks: TaskItem[]; roomCleanings: RoomCleaning[] }) {
     const kitchenClosingTasks = tasks.filter((task) => task.kitchenClosing);
     const regularTasks = tasks.filter((task) => !task.kitchenClosing);
 
@@ -341,8 +396,23 @@ function TasksTab({ tasks }: { tasks: TaskItem[] }) {
         <section className="grid gap-4">
             <div className="grid gap-1">
                 <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Trabajo asignado</h2>
-                <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">Completa primero las tareas del turno. El cierre de cocina se hace aqui.</p>
+                <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">
+                    Completa primero las tareas del turno. El cierre de cocina se hace aqui.
+                </p>
             </div>
+            {roomCleanings.length > 0 && (
+                <section className="grid gap-3">
+                    <div className="flex items-center justify-between gap-3">
+                        <h3 className="text-sm font-medium text-neutral-500 dark:text-zinc-400">Mis habitaciones</h3>
+                        <span className="text-xs text-neutral-500 dark:text-zinc-400">
+                            {roomCleanings.filter((task) => task.rawStatus === 'completed').length}/{roomCleanings.length}
+                        </span>
+                    </div>
+                    {roomCleanings.map((task) => (
+                        <RoomCleaningCard key={task.id} task={task} />
+                    ))}
+                </section>
+            )}
             {kitchenClosingTasks.map((task) => (
                 <TaskCard key={task.id} task={task} />
             ))}
@@ -354,8 +424,104 @@ function TasksTab({ tasks }: { tasks: TaskItem[] }) {
                     ))}
                 </section>
             )}
-            {tasks.length === 0 && <EmptyState text="Sin tareas para esta area." />}
+            {tasks.length === 0 && roomCleanings.length === 0 && <EmptyState text="Sin tareas para esta area." />}
         </section>
+    );
+}
+
+function RoomCleaningCard({ task }: { task: RoomCleaning }) {
+    const { data, setData, post, processing, reset } = useForm({ severity: 'normal', body: '' });
+    const completeForm = useForm({ notes: '' });
+    const isCompleted = task.rawStatus === 'completed';
+    const startTask = () => router.patch(route('employee.room-cleaning.start', task.id), {}, { preserveScroll: true });
+    const completeTask = () => completeForm.patch(route('employee.room-cleaning.complete', task.id), { preserveScroll: true });
+    const submitNote: FormEventHandler = (event) => {
+        event.preventDefault();
+        post(route('employee.room-cleaning.notes.store', task.id), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+        });
+    };
+
+    return (
+        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
+            <CardContent className="grid gap-4 p-4">
+                <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                            <BedDouble className="size-4 text-neutral-500 dark:text-zinc-400" />
+                            <h3 className="text-xl font-semibold text-neutral-900 dark:text-zinc-50">{task.roomNumber}</h3>
+                        </div>
+                        <p className="mt-1 text-sm text-neutral-500 dark:text-zinc-400">
+                            Piso {task.floor} / {task.cleaningType === 'checkout' ? 'Salida' : 'Estancia'}
+                        </p>
+                    </div>
+                    <span
+                        className={`rounded-lg px-2.5 py-1 text-xs font-medium ${isCompleted ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200' : 'bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-200'}`}
+                    >
+                        {task.status}
+                    </span>
+                </div>
+
+                <div className="grid gap-1 text-sm text-neutral-500 dark:text-zinc-400">
+                    <p className="truncate text-neutral-900 dark:text-zinc-50">{task.guestName ?? 'Huesped sin nombre'}</p>
+                    {task.companyName && <p className="truncate">{task.companyName}</p>}
+                    <p>
+                        {task.checkInDate ?? 'Sin llegada'} a {task.checkOutDate ?? 'Sin salida'}
+                    </p>
+                    {task.scheduledAt && <p>Asignada {task.scheduledAt}</p>}
+                </div>
+
+                {!isCompleted && (
+                    <div className="grid grid-cols-2 gap-2">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="rounded-lg"
+                            onClick={startTask}
+                            disabled={task.rawStatus === 'in_progress'}
+                        >
+                            En progreso
+                        </Button>
+                        <Button type="button" className="rounded-lg" onClick={completeTask} disabled={completeForm.processing}>
+                            {completeForm.processing ? <LoaderCircle className="size-4 animate-spin" /> : <ClipboardCheck className="size-4" />}
+                            Limpia
+                        </Button>
+                    </div>
+                )}
+
+                <form onSubmit={submitNote} className="grid gap-3 border-t border-neutral-200 pt-4 dark:border-zinc-800">
+                    <div className="grid grid-cols-[1fr_auto] gap-2">
+                        <Input
+                            value={data.body}
+                            onChange={(event) => setData('body', event.target.value)}
+                            placeholder="Novedad de la habitacion"
+                            className="rounded-lg"
+                        />
+                        <Button
+                            type="button"
+                            variant={data.severity === 'urgent' ? 'default' : 'outline'}
+                            className="rounded-lg"
+                            onClick={() => setData('severity', data.severity === 'urgent' ? 'normal' : 'urgent')}
+                        >
+                            Urgente
+                        </Button>
+                    </div>
+                    <Button type="submit" disabled={processing || !data.body.trim()} variant="outline" className="rounded-lg">
+                        {processing ? <LoaderCircle className="size-4 animate-spin" /> : <Send className="size-4" />}
+                        Registrar novedad
+                    </Button>
+                </form>
+
+                {task.novelties.length > 0 && (
+                    <div className="grid gap-2">
+                        {task.novelties.map((novelty) => (
+                            <ListItem key={novelty.id} title={novelty.body} detail={novelty.createdAt} status={novelty.severity} />
+                        ))}
+                    </div>
+                )}
+            </CardContent>
+        </Card>
     );
 }
 
@@ -365,7 +531,11 @@ function TaskCard({ task }: { task: TaskItem }) {
     }
 
     const completeTask = () => {
-        router.patch(route('employee.tasks.complete', task.id), { notes: `Completado desde portal operativo: ${task.title}` }, { preserveScroll: true });
+        router.patch(
+            route('employee.tasks.complete', task.id),
+            { notes: `Completado desde portal operativo: ${task.title}` },
+            { preserveScroll: true },
+        );
     };
     const validateTask = (decision: 'validated' | 'rejected') => {
         router.patch(route('employee.tasks.validate', task.id), { decision }, { preserveScroll: true });
@@ -565,12 +735,17 @@ function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: Ki
                     <div className="grid gap-4">
                         <div className="grid gap-2">
                             <p className="text-sm font-medium text-neutral-900 dark:text-zinc-50">Reposicion desde bodega</p>
-                            <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">Saca exactamente las cantidades indicadas y confirma al terminar.</p>
+                            <p className="text-sm leading-5 text-neutral-500 dark:text-zinc-400">
+                                Saca exactamente las cantidades indicadas y confirma al terminar.
+                            </p>
                         </div>
                         <div className="grid gap-0 overflow-hidden rounded-lg border border-neutral-200 dark:border-zinc-800">
                             {requiredReplenishments.length > 0 ? (
                                 requiredReplenishments.map((item) => (
-                                    <div key={item.id} className="flex items-center justify-between gap-3 border-b border-neutral-200 p-3 last:border-b-0 dark:border-zinc-800">
+                                    <div
+                                        key={item.id}
+                                        className="flex items-center justify-between gap-3 border-b border-neutral-200 p-3 last:border-b-0 dark:border-zinc-800"
+                                    >
                                         <div className="min-w-0">
                                             <p className="truncate text-sm font-medium">{item.productName}</p>
                                             <p className="text-xs text-neutral-500 dark:text-zinc-400">{item.unit}</p>
@@ -590,9 +765,17 @@ function KitchenClosingTaskCard({ task, closing }: { task: TaskItem; closing: Ki
 
                 {closing.status === 'closed' && (
                     <div className="grid gap-2">
-                        <ListItem title="Cierre completado" detail="La reposicion fue verificada y el inventario inicial del nuevo dia quedo registrado." status="completed" />
+                        <ListItem
+                            title="Cierre completado"
+                            detail="La reposicion fue verificada y el inventario inicial del nuevo dia quedo registrado."
+                            status="completed"
+                        />
                         {closing.hasReplenishmentAlert && (
-                            <ListItem title="Alerta de reposicion" detail="Lo real egresado no coincide con lo requerido. Gerencia puede auditar el detalle." status="high" />
+                            <ListItem
+                                title="Alerta de reposicion"
+                                detail="Lo real egresado no coincide con lo requerido. Gerencia puede auditar el detalle."
+                                status="high"
+                            />
                         )}
                     </div>
                 )}
@@ -642,7 +825,11 @@ function MiniMetric({ label, value }: { label: string; value: number }) {
 }
 
 function EmptyState({ text }: { text: string }) {
-    return <p className="rounded-xl border border-dashed border-neutral-200 p-4 text-sm text-neutral-500 dark:border-zinc-800 dark:text-zinc-400">{text}</p>;
+    return (
+        <p className="rounded-xl border border-dashed border-neutral-200 p-4 text-sm text-neutral-500 dark:border-zinc-800 dark:text-zinc-400">
+            {text}
+        </p>
+    );
 }
 
 function TabButton({

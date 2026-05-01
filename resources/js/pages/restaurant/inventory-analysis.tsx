@@ -77,7 +77,7 @@ function statusLabel(status: string) {
 }
 
 function moneyTone(value: number) {
-    return value < 0 ? 'text-red-700 dark:text-red-300' : 'text-neutral-900 dark:text-zinc-50';
+    return value < 0 ? 'text-red-700 dark:text-red-300' : 'text-foreground';
 }
 
 function dayOutcome(day: Day) {
@@ -120,10 +120,10 @@ function MappingForm({ item, stockItems }: { item: MappingRecipeItem; stockItems
     };
 
     return (
-        <form onSubmit={submit} className="grid gap-3 border-b border-neutral-200 p-4 last:border-b-0 lg:grid-cols-[1.4fr_1fr_120px_auto] dark:border-zinc-800">
+        <form onSubmit={submit} className="grid gap-3 border-b border-border/60 p-4 transition-colors hover:bg-muted/50 last:border-b-0 lg:grid-cols-[1.4fr_1fr_120px_auto]">
             <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.ingredient}</p>
-                <p className="mt-1 truncate text-xs text-neutral-500 dark:text-zinc-400">
+                <p className="truncate text-sm font-medium text-foreground">{item.ingredient}</p>
+                <p className="mt-1 truncate text-xs text-muted-foreground">
                     {item.recipe} / {numberFormat(item.quantityUsed)} {item.unit}
                 </p>
             </div>
@@ -175,16 +175,16 @@ export default function InventoryAnalysis({
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Analisis restaurante" />
-            <div className="flex h-full flex-1 flex-col gap-6 bg-neutral-50 p-6 dark:bg-zinc-950">
+            <div className="flex h-full flex-1 flex-col gap-8 p-5 md:p-8">
                 <section className="flex flex-col gap-3">
-                    <span className="flex w-fit items-center gap-2 text-sm text-neutral-500 dark:text-zinc-400">
+                    <span className="flex w-fit items-center gap-2 rounded-full border border-border/60 bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
                         <span className="size-2 rounded-full bg-emerald-500" />
                         Cocina / inventario
                     </span>
                     <div className="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
                         <div className="grid gap-2">
-                            <h1 className="text-3xl font-semibold text-neutral-900 dark:text-zinc-50">Cierre semanal de cocina</h1>
-                            <p className="text-sm text-neutral-500 dark:text-zinc-400">Semana {week.label}</p>
+                            <h1 className="text-2xl font-semibold text-foreground">Cierre semanal de cocina</h1>
+                            <p className="text-sm font-normal text-muted-foreground">Semana {week.label}</p>
                         </div>
                         <Badge variant={summary.alerts > 0 ? 'destructive' : 'outline'} className="w-fit rounded-lg px-3 py-1">
                             {summary.alerts > 0 ? `${summary.alerts} dias con alerta` : 'Semana sin alertas'}
@@ -200,12 +200,12 @@ export default function InventoryAnalysis({
                 </section>
 
                 <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-                    <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-                        <CardHeader className="border-b border-neutral-200 p-5 dark:border-zinc-800">
-                            <CardTitle className="text-lg">Lectura por dia</CardTitle>
+                    <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+                        <CardHeader className="border-b border-border/60 p-5">
+                            <CardTitle className="text-base font-semibold text-foreground">Lectura por dia</CardTitle>
                         </CardHeader>
                         <CardContent className="p-0">
-                            <div className="hidden grid-cols-[1fr_140px_150px_150px_150px] border-b border-neutral-200 bg-neutral-50 px-5 py-3 text-xs font-medium uppercase text-neutral-500 lg:grid dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+                            <div className="hidden grid-cols-[1fr_140px_150px_150px_150px] border-b border-border/60 bg-muted/40 px-5 py-3 text-xs font-medium uppercase text-muted-foreground lg:grid">
                                 <span>Dia operativo</span>
                                 <span>Estado</span>
                                 <span>Resultado</span>
@@ -217,20 +217,20 @@ export default function InventoryAnalysis({
                                     key={day.date}
                                     type="button"
                                     onClick={() => setSelectedDate(day.date)}
-                                    className={`grid w-full gap-3 border-b border-neutral-200 px-5 py-4 text-left last:border-b-0 lg:grid-cols-[1fr_140px_150px_150px_150px] lg:items-center dark:border-zinc-800 ${
-                                        selectedDay?.date === day.date ? 'bg-sky-50 dark:bg-sky-950/30' : 'bg-white dark:bg-zinc-900'
+                                    className={`grid w-full gap-3 border-b border-border/60 px-5 py-4 text-left transition-colors hover:bg-muted/50 last:border-b-0 lg:grid-cols-[1fr_140px_150px_150px_150px] lg:items-center ${
+                                        selectedDay?.date === day.date ? 'bg-sky-50 dark:bg-sky-950/30' : 'bg-card'
                                     }`}
                                 >
                                     <div>
-                                        <p className="font-medium text-neutral-900 dark:text-zinc-50">{day.label}</p>
-                                        <p className="mt-1 text-xs text-neutral-500 dark:text-zinc-400">{day.countedBy ? `Conteo: ${day.countedBy}` : day.date}</p>
+                                        <p className="font-medium text-foreground">{day.label}</p>
+                                        <p className="mt-1 text-xs text-muted-foreground">{day.countedBy ? `Conteo: ${day.countedBy}` : day.date}</p>
                                     </div>
-                                    <span className="text-sm text-neutral-600 dark:text-zinc-300">{statusLabel(day.status)}</span>
+                                    <span className="text-sm text-muted-foreground">{statusLabel(day.status)}</span>
                                     <span className={day.hasAlert ? 'text-sm font-semibold text-red-700 dark:text-red-300' : 'text-sm text-emerald-700 dark:text-emerald-300'}>
                                         {dayOutcome(day)}
                                     </span>
                                     <span className={`text-sm font-semibold ${moneyTone(day.negativeDiscrepancyTotal)}`}>{numberFormat(day.negativeDiscrepancyTotal)}</span>
-                                    <span className="text-sm text-neutral-600 dark:text-zinc-300">
+                                    <span className="text-sm text-muted-foreground">
                                         {numberFormat(day.replenishmentActualTotal)} / {numberFormat(day.replenishmentRequiredTotal)}
                                     </span>
                                 </button>
@@ -238,16 +238,16 @@ export default function InventoryAnalysis({
                         </CardContent>
                     </Card>
 
-                    <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-                        <CardHeader className="border-b border-neutral-200 p-5 dark:border-zinc-800">
-                            <CardTitle className="text-lg">Auditoria del dia</CardTitle>
+                    <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+                        <CardHeader className="border-b border-border/60 p-5">
+                            <CardTitle className="text-base font-semibold text-foreground">Auditoria del dia</CardTitle>
                         </CardHeader>
                         <CardContent className="grid gap-4 p-5">
                             {selectedDay ? (
                                 <>
                                     <div className="grid gap-1">
-                                        <p className="text-xl font-semibold text-neutral-900 dark:text-zinc-50">{selectedDay.label}</p>
-                                        <p className="text-sm text-neutral-500 dark:text-zinc-400">{dayOutcome(selectedDay)}</p>
+                                        <p className="text-base font-semibold text-foreground">{selectedDay.label}</p>
+                                        <p className="text-sm text-muted-foreground">{dayOutcome(selectedDay)}</p>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         <MiniMetric label="Merma" value={numberFormat(selectedDay.wasteTotal)} />
@@ -258,11 +258,11 @@ export default function InventoryAnalysis({
                                     <div className="grid gap-2">
                                         {issueItems(selectedDay).length > 0 ? (
                                             issueItems(selectedDay).map((item) => (
-                                                <div key={item.id} className="rounded-lg border border-neutral-200 p-3 dark:border-zinc-800">
+                                                <div key={item.id} className="rounded-lg border border-border/60 p-3">
                                                     <div className="flex items-start justify-between gap-3">
                                                         <div className="min-w-0">
-                                                            <p className="truncate text-sm font-medium text-neutral-900 dark:text-zinc-50">{item.productName}</p>
-                                                            <p className="mt-1 text-xs text-neutral-500 dark:text-zinc-400">{item.category}</p>
+                                                            <p className="truncate text-sm font-medium text-foreground">{item.productName}</p>
+                                                            <p className="mt-1 text-xs text-muted-foreground">{item.category}</p>
                                                         </div>
                                                         <Badge variant={item.hasNegativeDiscrepancy ? 'destructive' : 'outline'}>
                                                             {item.hasNegativeDiscrepancy ? 'Faltante' : 'Revision'}
@@ -276,27 +276,27 @@ export default function InventoryAnalysis({
                                                 </div>
                                             ))
                                         ) : (
-                                            <p className="rounded-lg border border-dashed border-neutral-200 p-4 text-sm text-neutral-500 dark:border-zinc-800 dark:text-zinc-400">
+                                            <p className="rounded-lg border border-dashed border-border/60 p-4 text-sm text-muted-foreground">
                                                 No hay productos para auditar en este dia.
                                             </p>
                                         )}
                                     </div>
                                 </>
                             ) : (
-                                <p className="text-sm text-neutral-500 dark:text-zinc-400">Sin datos de cierre para esta semana.</p>
+                                <p className="text-sm text-muted-foreground">Sin datos de cierre para esta semana.</p>
                             )}
                         </CardContent>
                     </Card>
                 </section>
 
-                <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-                    <CardHeader className="flex flex-col gap-3 border-b border-neutral-200 p-5 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800">
+                <Card className="border-border/60 bg-card shadow-none">
+                    <CardHeader className="flex flex-col gap-3 border-b border-border/60 p-5 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                            <CardTitle className="flex items-center gap-2 text-lg">
-                                <Settings2 className="size-5 text-neutral-500" />
+                            <CardTitle className="flex items-center gap-2 text-base font-semibold text-foreground">
+                                <Settings2 className="size-4 text-muted-foreground" />
                                 Cruce receta-stock
                             </CardTitle>
-                            <p className="mt-1 text-sm text-neutral-500 dark:text-zinc-400">{pendingMappingCount} cruces pendientes en la semana</p>
+                            <p className="mt-1 text-sm text-muted-foreground">{pendingMappingCount} cruces pendientes en la semana</p>
                         </div>
                         <Badge variant="outline" className="w-fit">
                             Configuracion
@@ -306,7 +306,7 @@ export default function InventoryAnalysis({
                         {mappings.recipeItems.length > 0 ? (
                             mappings.recipeItems.map((item) => <MappingForm key={item.id} item={item} stockItems={mappings.stockItems} />)
                         ) : (
-                            <p className="flex items-center gap-2 p-5 text-sm text-neutral-500 dark:text-zinc-400">
+                            <p className="flex items-center gap-2 p-5 text-sm text-muted-foreground">
                                 <ClipboardList className="size-4" />
                                 No hay ingredientes de recetas para mapear.
                             </p>
@@ -320,13 +320,13 @@ export default function InventoryAnalysis({
 
 function SummaryCard({ label, value, icon: Icon, danger = false }: { label: string; value: string | number; icon: typeof Check; danger?: boolean }) {
     return (
-        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-            <CardContent className="flex items-start justify-between gap-4 p-6">
+        <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+            <CardContent className="flex items-start justify-between gap-4 p-4">
                 <div className="grid gap-2">
-                    <p className="text-sm text-neutral-500 dark:text-zinc-400">{label}</p>
-                    <p className={`text-3xl font-semibold ${danger ? 'text-red-700 dark:text-red-300' : 'text-neutral-900 dark:text-zinc-50'}`}>{value}</p>
+                    <p className="text-xs font-medium text-muted-foreground">{label}</p>
+                    <p className={`tabular-nums text-2xl font-semibold ${danger ? 'text-red-700 dark:text-red-300' : 'text-foreground'}`}>{value}</p>
                 </div>
-                <Icon className={danger ? 'size-5 text-red-600' : 'size-5 text-neutral-500 dark:text-zinc-400'} />
+                <Icon className={danger ? 'size-4 shrink-0 text-red-600' : 'size-4 shrink-0 text-muted-foreground'} />
             </CardContent>
         </Card>
     );
@@ -334,9 +334,9 @@ function SummaryCard({ label, value, icon: Icon, danger = false }: { label: stri
 
 function MiniMetric({ label, value, danger = false }: { label: string; value: string; danger?: boolean }) {
     return (
-        <div className="rounded-lg border border-neutral-200 p-3 dark:border-zinc-800">
-            <p className="text-xs text-neutral-500 dark:text-zinc-400">{label}</p>
-            <p className={`mt-1 text-lg font-semibold ${danger ? 'text-red-700 dark:text-red-300' : 'text-neutral-900 dark:text-zinc-50'}`}>{value}</p>
+        <div className="rounded-lg border border-border/60 p-3">
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className={`mt-1 text-base font-semibold ${danger ? 'text-red-700 dark:text-red-300' : 'text-foreground'}`}>{value}</p>
         </div>
     );
 }
@@ -344,8 +344,8 @@ function MiniMetric({ label, value, danger = false }: { label: string; value: st
 function MiniLine({ label, value, danger = false }: { label: string; value: string; danger?: boolean }) {
     return (
         <div>
-            <p className="text-neutral-500 dark:text-zinc-400">{label}</p>
-            <p className={`mt-1 font-semibold ${danger ? 'text-red-700 dark:text-red-300' : 'text-neutral-900 dark:text-zinc-50'}`}>{value}</p>
+            <p className="text-muted-foreground">{label}</p>
+            <p className={`mt-1 font-semibold ${danger ? 'text-red-700 dark:text-red-300' : 'text-foreground'}`}>{value}</p>
         </div>
     );
 }

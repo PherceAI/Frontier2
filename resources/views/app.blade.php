@@ -10,7 +10,7 @@
         <link rel="manifest" href="/manifest.webmanifest">
         <link rel="apple-touch-icon" href="/pwa/icon-192.svg">
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=inter:400,500,600" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700" rel="stylesheet" />
 
         @routes
         @viteReactRefresh

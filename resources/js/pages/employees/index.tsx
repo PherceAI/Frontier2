@@ -70,26 +70,26 @@ function EmployeeAreaForm({ employee, areas }: { employee: Employee; areas: Area
     const status = statusCopy[employee.operational_status] ?? { label: employee.operational_status, color: 'bg-neutral-400' };
 
     return (
-        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-            <CardHeader className="gap-4 border-b border-neutral-200 p-6 dark:border-zinc-800">
+        <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+            <CardHeader className="gap-4 border-b border-border/60 p-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="flex items-start gap-4">
-                        <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-sm font-medium text-neutral-900 dark:bg-zinc-800 dark:text-zinc-50">
+                        <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-medium text-foreground">
                             {employee.name.slice(0, 1).toUpperCase()}
                         </div>
                         <div className="grid gap-1">
-                            <CardTitle className="text-base font-medium tracking-[-0.02em] text-neutral-900 dark:text-zinc-50">
+                            <CardTitle className="text-base font-semibold text-foreground">
                                 {employee.name}
                             </CardTitle>
-                            <p className="text-sm font-normal text-neutral-500 dark:text-zinc-400">{employee.email}</p>
-                            <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-normal text-neutral-500 dark:text-zinc-400">
+                            <p className="text-sm font-normal tracking-[-0.01em] text-muted-foreground">{employee.email}</p>
+                            <div className="mt-2 flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
                                 <span className="flex items-center gap-2">
                                     <span className={`size-2 rounded-full ${status.color}`} />
                                     {status.label}
                                 </span>
                                 <span className="flex items-center gap-2">
                                     <span
-                                        className={`size-2 rounded-full ${employee.is_online ? 'bg-emerald-500' : 'bg-neutral-300 dark:bg-zinc-700'}`}
+                                        className={`size-2 rounded-full ${employee.is_online ? 'bg-emerald-500' : 'bg-border'}`}
                                     />
                                     {employee.is_online ? 'Conectado' : 'Sin sesion activa'}
                                 </span>
@@ -98,7 +98,7 @@ function EmployeeAreaForm({ employee, areas }: { employee: Employee; areas: Area
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {employee.roles.map((role) => (
-                            <span key={role} className="flex items-center gap-2 text-sm font-normal text-neutral-500 dark:text-zinc-400">
+                            <span key={role} className="flex items-center gap-2 text-sm font-normal text-muted-foreground">
                                 <span className="size-2 rounded-full bg-sky-500" />
                                 {role}
                             </span>
@@ -116,7 +116,7 @@ function EmployeeAreaForm({ employee, areas }: { employee: Employee; areas: Area
                                 <Label
                                     key={area.id}
                                     htmlFor={inputId}
-                                    className="flex cursor-pointer items-start gap-3 rounded-lg border border-neutral-200 p-4 text-sm font-normal transition-colors hover:bg-neutral-100 dark:border-zinc-800 dark:hover:bg-zinc-800/50"
+                                    className="flex cursor-pointer items-start gap-3 rounded-lg border border-border/60 p-4 text-sm font-normal transition-colors duration-150 hover:bg-muted/50"
                                 >
                                     <Checkbox
                                         id={inputId}
@@ -125,15 +125,15 @@ function EmployeeAreaForm({ employee, areas }: { employee: Employee; areas: Area
                                         className="mt-0.5 rounded-lg"
                                     />
                                     <span className="grid gap-1">
-                                        <span className="text-sm font-medium tracking-[-0.02em] text-neutral-900 dark:text-zinc-50">{area.name}</span>
-                                        <span className="text-sm leading-5 font-normal text-neutral-500 dark:text-zinc-400">{area.description}</span>
+                                        <span className="text-sm font-medium tracking-[-0.02em] text-foreground">{area.name}</span>
+                                        <span className="text-sm leading-5 font-normal text-muted-foreground">{area.description}</span>
                                     </span>
                                 </Label>
                             );
                         })}
                     </div>
-                    <div className="flex flex-col gap-3 border-t border-neutral-200 pt-4 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800">
-                        <span className="text-sm font-normal text-neutral-500 dark:text-zinc-400">
+                    <div className="flex flex-col gap-3 border-t border-border/60 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                        <span className="text-sm font-normal text-muted-foreground">
                             {data.area_ids.length === 0 ? 'Sin areas asignadas' : `${data.area_ids.length} area(s) asignada(s)`}
                         </span>
                         <Button type="submit" disabled={processing} className="rounded-lg tracking-[-0.02em]">
@@ -159,15 +159,15 @@ export default function EmployeesIndex({ employees, areas, summary }: { employee
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Empleados" />
-            <div className="flex h-full flex-1 flex-col gap-6 bg-neutral-50 p-6 tracking-[-0.02em] dark:bg-zinc-950">
+            <div className="flex h-full flex-1 flex-col gap-8 p-5 md:p-8">
                 <section className="flex flex-col gap-4">
-                    <span className="flex w-fit items-center gap-2 text-sm font-normal text-neutral-500 dark:text-zinc-400">
+                    <span className="flex w-fit items-center gap-2 rounded-full border border-border/60 bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
                         <span className="size-2 rounded-full bg-emerald-500" />
                         Control gerencial
                     </span>
                     <div className="grid gap-2">
-                        <h1 className="text-3xl font-semibold tracking-[-0.02em] text-neutral-900 dark:text-zinc-50">Empleados</h1>
-                        <p className="max-w-3xl text-sm leading-6 font-normal text-neutral-500 dark:text-zinc-400">
+                        <h1 className="text-2xl font-semibold text-foreground">Empleados</h1>
+                        <p className="max-w-3xl text-sm leading-relaxed font-normal tracking-[-0.01em] text-muted-foreground">
                             Gestiona usuarios registrados, estado operativo y asignacion de una o varias areas por empleado.
                         </p>
                     </div>
@@ -175,11 +175,11 @@ export default function EmployeesIndex({ employees, areas, summary }: { employee
 
                 <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     {metrics.map((metric) => (
-                        <Card key={metric.label} className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
+                        <Card key={metric.label} className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
                             <CardContent className="grid gap-3 p-6">
-                                <p className="text-sm font-normal text-neutral-500 dark:text-zinc-400">{metric.label}</p>
-                                <p className="text-3xl font-semibold tracking-[-0.02em] text-neutral-900 dark:text-zinc-50">{metric.value}</p>
-                                <span className="flex items-center gap-2 text-sm font-normal text-neutral-500 dark:text-zinc-400">
+                                <p className="text-sm font-medium tracking-[-0.01em] text-muted-foreground">{metric.label}</p>
+                                <p className="tabular-nums text-2xl font-semibold text-foreground">{metric.value}</p>
+                                <span className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                                     <span className="size-2 rounded-full bg-sky-500" />
                                     {metric.state}
                                 </span>
@@ -192,10 +192,10 @@ export default function EmployeesIndex({ employees, areas, summary }: { employee
                     {employees.length > 0 ? (
                         employees.map((employee) => <EmployeeAreaForm key={employee.id} employee={employee} areas={areas} />)
                     ) : (
-                        <Card className="rounded-xl border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
+                        <Card className="border-border/60 bg-card shadow-none">
                             <CardContent className="flex items-center gap-4 p-6">
-                                <UsersRound className="size-5 text-neutral-500 dark:text-zinc-400" />
-                                <p className="text-sm font-normal text-neutral-500 dark:text-zinc-400">Todavia no hay empleados registrados.</p>
+                                <UsersRound className="size-5 text-muted-foreground" />
+                                <p className="text-sm font-normal text-muted-foreground">Todavia no hay empleados registrados.</p>
                             </CardContent>
                         </Card>
                     )}

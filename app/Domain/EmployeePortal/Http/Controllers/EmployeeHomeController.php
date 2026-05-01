@@ -2,8 +2,10 @@
 
 namespace App\Domain\EmployeePortal\Http\Controllers;
 
-use App\Domain\Operations\Actions\CompleteOperationalTask;
+use App\Domain\Housekeeping\Models\HousekeepingTask;
+use App\Domain\Housekeeping\Models\HousekeepingTaskNote;
 use App\Domain\Operations\Actions\CanOperateOnTask;
+use App\Domain\Operations\Actions\CompleteOperationalTask;
 use App\Domain\Operations\Actions\GetEmployeeOperationalPortal;
 use App\Domain\Operations\Actions\ReportKitchenSupplyShortage;
 use App\Domain\Operations\Actions\SubmitOperationalForm;
@@ -16,6 +18,7 @@ use App\Domain\Restaurant\Models\KitchenInventoryClosing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -79,6 +82,58 @@ class EmployeeHomeController extends Controller
         return back()->with('status', 'shortage-reported');
     }
 
+    public function startRoomCleaning(Request $request, HousekeepingTask $task): RedirectResponse
+    {
+        abort_unless($this->canOperateOnRoomCleaning($request, $task), 403);
+
+        if ($task->status === HousekeepingTask::STATUS_PENDING) {
+            $task->forceFill([
+                'status' => HousekeepingTask::STATUS_IN_PROGRESS,
+                'started_at' => now(),
+            ])->save();
+        }
+
+        return back()->with('status', 'room-cleaning-started');
+    }
+
+    public function completeRoomCleaning(Request $request, HousekeepingTask $task): RedirectResponse
+    {
+        abort_unless($this->canOperateOnRoomCleaning($request, $task), 403);
+
+        $validated = $request->validate([
+            'notes' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $task->forceFill([
+            'status' => HousekeepingTask::STATUS_COMPLETED,
+            'started_at' => $task->started_at ?? now(),
+            'completed_by' => $request->user()->id,
+            'completed_at' => now(),
+            'notes' => $validated['notes'] ?? $task->notes,
+        ])->save();
+
+        return back()->with('status', 'room-cleaning-completed');
+    }
+
+    public function addRoomCleaningNote(Request $request, HousekeepingTask $task): RedirectResponse
+    {
+        abort_unless($this->canOperateOnRoomCleaning($request, $task), 403);
+
+        $validated = $request->validate([
+            'severity' => ['required', 'string', Rule::in([HousekeepingTaskNote::SEVERITY_NORMAL, HousekeepingTaskNote::SEVERITY_URGENT])],
+            'body' => ['required', 'string', 'max:1000'],
+        ]);
+
+        HousekeepingTaskNote::create([
+            'housekeeping_task_id' => $task->id,
+            'user_id' => $request->user()->id,
+            'severity' => $validated['severity'],
+            'body' => $validated['body'],
+        ]);
+
+        return back()->with('status', 'room-cleaning-note-added');
+    }
+
     public function submitKitchenClosingCount(
         Request $request,
         KitchenInventoryClosing $closing,
@@ -111,5 +166,11 @@ class EmployeeHomeController extends Controller
         $confirmReplenishment->handle($request->user(), $closing);
 
         return back()->with('status', 'kitchen-replenishment-confirmed');
+    }
+
+    private function canOperateOnRoomCleaning(Request $request, HousekeepingTask $task): bool
+    {
+        return $task->assigned_to === $request->user()->id
+            && $request->user()->activeAreas()->where('areas.slug', 'rooms')->exists();
     }
 }

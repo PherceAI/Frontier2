@@ -28,6 +28,12 @@ Schedule::command('frontier:sync-contifico-restaurant --period=month')
     ->timezone('America/Guayaquil')
     ->withoutOverlapping();
 
+Schedule::command('frontier:assign-room-cleaning')
+    ->days([1, 2, 3, 4, 5, 6])
+    ->at('07:00')
+    ->timezone('America/Guayaquil')
+    ->withoutOverlapping();
+
 Schedule::command('frontier:create-kitchen-inventory-closing')
     ->dailyAt('01:00')
     ->timezone('America/Guayaquil')

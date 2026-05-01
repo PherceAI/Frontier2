@@ -63,19 +63,19 @@ export default function InventoryDashboardPage({ dashboard }: { dashboard: Inven
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Inventario" />
-            <div className="flex h-full flex-1 flex-col gap-6 bg-neutral-50 p-6 dark:bg-zinc-950">
+            <div className="flex h-full flex-1 flex-col gap-8 p-5 md:p-8">
                 <section className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div>
-                        <div className="flex items-center gap-2 text-sm text-neutral-500 dark:text-zinc-400">
-                            <PackageSearch className="size-4" />
+                        <div className="flex w-fit items-center gap-2 rounded-full border border-border/60 bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+                            <PackageSearch className="size-4 text-emerald-500" />
                             Bodega conectada a Google Sheets
                         </div>
-                        <h1 className="mt-3 text-3xl font-semibold text-neutral-900 dark:text-zinc-50">Inventario</h1>
-                        <p className="mt-2 max-w-3xl text-sm leading-6 text-neutral-500 dark:text-zinc-400">
+                        <h1 className="mt-3 text-2xl font-semibold text-foreground">Inventario</h1>
+                        <p className="mt-2 max-w-3xl text-sm leading-relaxed font-normal tracking-[-0.01em] text-muted-foreground">
                             Lectura gerencial del sistema actual de inventario: valor en bodega, cuentas por pagar y consumos por area para cruzar con habitaciones, restaurante y mantenimiento.
                         </p>
                     </div>
-                    <div className="rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+                    <div className="rounded-lg border border-border/60 bg-card px-4 py-3 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Clock3 className="size-4" />
                             {formatDateTime(dashboard.generatedAt ?? dashboard.lastSyncedAt)}
@@ -83,7 +83,7 @@ export default function InventoryDashboardPage({ dashboard }: { dashboard: Inven
                     </div>
                 </section>
 
-                <section className="grid gap-4 md:grid-cols-5">
+                <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
                     <MetricCard icon={Boxes} label="Productos" value={number(dashboard.summary.totalProducts)} detail="Catalogo activo" />
                     <MetricCard icon={DollarSign} label="Inventario" value={money(dashboard.summary.inventoryValue)} detail="Valor total" />
                     <MetricCard icon={FileWarning} label="CxP total" value={money(dashboard.summary.payablesTotal)} detail={`${dashboard.summary.pendingDocuments} documentos`} />
@@ -92,48 +92,48 @@ export default function InventoryDashboardPage({ dashboard }: { dashboard: Inven
                 </section>
 
                 <section className="grid gap-4 xl:grid-cols-[1fr_1.2fr]">
-                    <Card className="rounded-lg border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-                        <CardContent className="grid gap-4 p-5">
+                    <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+                        <CardContent className="grid gap-6 p-6">
                             <div className="flex items-center justify-between gap-3">
-                                <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Inventario por ubicacion</h2>
+                <h2 className="text-base font-semibold text-foreground">Inventario por ubicacion</h2>
                                 <Badge variant="secondary" className="rounded-md">
                                     {money(dashboard.summary.inventoryValue)}
                                 </Badge>
                             </div>
                             <div className="grid gap-3">
                                 {dashboard.locations.map((location) => (
-                                    <div key={location.key} className="rounded-lg border border-neutral-200 p-4 dark:border-zinc-800">
+                        <div key={location.key} className="grid gap-2 rounded-lg border border-border/60 p-4 transition-colors duration-150 hover:bg-muted/50">
                                         <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{location.label}</span>
-                                            <span className="text-sm text-neutral-500 dark:text-zinc-400">{money(location.value)}</span>
+                                            <span className="text-sm font-medium text-foreground">{location.label}</span>
+                                            <span className="text-sm text-muted-foreground">{money(location.value)}</span>
                                         </div>
-                                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-neutral-100 dark:bg-zinc-800">
+                                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
                                             <div
                                                 className="h-full bg-emerald-500"
                                                 style={{ width: `${dashboard.summary.inventoryValue ? (location.value / dashboard.summary.inventoryValue) * 100 : 0}%` }}
                                             />
                                         </div>
-                                        <div className="mt-2 text-xs text-neutral-500 dark:text-zinc-400">{number(location.quantity)} unidades registradas</div>
+                                        <div className="mt-2 text-xs text-muted-foreground">{number(location.quantity)} unidades registradas</div>
                                     </div>
                                 ))}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="rounded-lg border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-                        <CardContent className="grid gap-4 p-5">
-                            <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">Senales para gerencia</h2>
+                    <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+                        <CardContent className="grid gap-6 p-6">
+                            <h2 className="text-base font-semibold text-foreground">Señales para gerencia</h2>
                             <div className="grid gap-3 md:grid-cols-3">
                                 {dashboard.signals.map((signal) => (
-                                    <div key={signal.title} className="rounded-lg border border-neutral-200 p-4 dark:border-zinc-800">
-                                        <div className="text-sm text-neutral-500 dark:text-zinc-400">{signal.title}</div>
-                                        <div className="mt-2 text-2xl font-semibold text-neutral-900 dark:text-zinc-50">{signal.value}</div>
-                                        <div className="mt-2 text-xs leading-5 text-neutral-500 dark:text-zinc-400">{signal.detail}</div>
+                                    <div key={signal.title} className="rounded-lg border border-border/60 p-4">
+                                        <div className="text-sm text-muted-foreground">{signal.title}</div>
+                                        <div className="mt-2 text-2xl font-semibold text-foreground">{signal.value}</div>
+                                        <div className="mt-2 text-xs leading-5 text-muted-foreground">{signal.detail}</div>
                                     </div>
                                 ))}
                             </div>
-                            <div className="grid gap-3 rounded-lg border border-neutral-200 p-4 dark:border-zinc-800">
-                                <div className="flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-zinc-50">
+                            <div className="grid gap-3 rounded-lg border border-border/60 p-4">
+                                <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                                     <TrendingUp className="size-4 text-emerald-600" />
                                     Ingresos vs egresos
                                 </div>
@@ -167,14 +167,16 @@ function MetricCard({
     detail: string;
 }) {
     return (
-        <Card className="rounded-lg border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-            <CardContent className="grid gap-3 p-5">
-                <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm text-neutral-500 dark:text-zinc-400">{label}</span>
-                    <Icon className="size-4 text-neutral-500 dark:text-zinc-400" />
+        <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+            <CardContent className="grid gap-2 p-4">
+                <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-medium text-muted-foreground">{label}</span>
+                    <Icon className="size-3.5 shrink-0 text-muted-foreground" />
                 </div>
-                <div className="text-2xl font-semibold text-neutral-900 dark:text-zinc-50">{value}</div>
-                <div className="text-xs text-neutral-500 dark:text-zinc-400">{detail}</div>
+                <div className="grid gap-0.5">
+                    <p className="tabular-nums text-xl font-semibold text-foreground">{value}</p>
+                    <p className="text-[11px] text-muted-foreground">{detail}</p>
+                </div>
             </CardContent>
         </Card>
     );
@@ -182,30 +184,30 @@ function MetricCard({
 
 function Movement({ label, value, records }: { label: string; value: number; records: number }) {
     return (
-        <div className="rounded-lg bg-neutral-50 p-3 dark:bg-zinc-950">
-            <div className="text-xs text-neutral-500 dark:text-zinc-400">{label}</div>
-            <div className="mt-1 text-lg font-semibold text-neutral-900 dark:text-zinc-50">{money(value)}</div>
-            <div className="text-xs text-neutral-500 dark:text-zinc-400">{records} registros</div>
+        <div className="rounded-lg bg-muted/40 p-3">
+            <div className="text-xs text-muted-foreground">{label}</div>
+            <div className="mt-1 text-lg font-semibold text-foreground">{money(value)}</div>
+            <div className="text-xs text-muted-foreground">{records} registros</div>
         </div>
     );
 }
 
 function AreaList({ title, areas, maxValue, tone }: { title: string; areas: AreaMetric[]; maxValue: number; tone: 'emerald' | 'rose' }) {
     return (
-        <Card className="rounded-lg border-neutral-200 bg-white shadow-none dark:border-zinc-800 dark:bg-zinc-900">
-            <CardContent className="grid gap-4 p-5">
-                <h2 className="text-lg font-medium text-neutral-900 dark:text-zinc-50">{title}</h2>
+        <Card className="border-border/60 bg-card shadow-none transition-colors duration-150 hover:border-border">
+            <CardContent className="grid gap-6 p-6">
+                <h2 className="text-base font-semibold text-foreground">{title}</h2>
                 <div className="grid gap-3">
                     {areas.map((area) => (
-                        <div key={area.key} className="grid gap-2 rounded-lg border border-neutral-200 p-4 dark:border-zinc-800">
+                        <div key={area.key} className="grid gap-2 rounded-lg border border-border/60 p-4 transition-colors duration-150 hover:bg-muted/50">
                             <div className="flex items-center justify-between gap-3">
-                                <span className="text-sm font-medium text-neutral-900 dark:text-zinc-50">{area.label}</span>
-                                <span className="text-sm text-neutral-500 dark:text-zinc-400">{money(area.value)}</span>
+                                <span className="text-sm font-medium text-foreground">{area.label}</span>
+                                <span className="text-sm text-muted-foreground">{money(area.value)}</span>
                             </div>
-                            <div className="h-2 overflow-hidden rounded-full bg-neutral-100 dark:bg-zinc-800">
+                            <div className="h-2 overflow-hidden rounded-full bg-muted">
                                 <div className={tone === 'emerald' ? 'h-full bg-emerald-500' : 'h-full bg-rose-500'} style={{ width: `${(area.value / maxValue) * 100}%` }} />
                             </div>
-                            <div className="flex justify-between text-xs text-neutral-500 dark:text-zinc-400">
+                            <div className="flex justify-between text-xs text-muted-foreground">
                                 <span>{number(area.quantity)} unidades</span>
                                 <span>{area.records ?? 0} registros</span>
                             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Operations\Actions;
 
+use App\Domain\Housekeeping\Models\HousekeepingTask;
 use App\Domain\Operations\Models\OperationalEvent;
 use App\Domain\Operations\Models\OperationalForm;
 use App\Domain\Operations\Models\OperationalNotification;
@@ -80,6 +81,7 @@ class GetEmployeeOperationalPortal
                 'body' => $notification->body,
                 'scheduledAt' => $notification->scheduled_at?->toIso8601String(),
             ])->values(),
+            'roomCleanings' => $this->roomCleanings($user, $activeArea),
             'kitchenStockCatalog' => $this->kitchenStockCatalog($activeArea),
             'criticalSupplies' => $this->criticalSuppliesFromEvents($events),
         ];
@@ -296,5 +298,57 @@ class GetEmployeeOperationalPortal
             'cancelled' => 'Cancelado',
             default => str($status)->replace('_', ' ')->headline()->toString(),
         };
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function roomCleanings(User $user, ?Area $area): array
+    {
+        if ($area?->slug !== 'rooms') {
+            return [];
+        }
+
+        return HousekeepingTask::query()
+            ->with(['room.type', 'taskNotes.user:id,name'])
+            ->where('housekeeping_tasks.assigned_to', $user->id)
+            ->whereDate('housekeeping_tasks.scheduled_date', today('America/Guayaquil')->toDateString())
+            ->whereIn('housekeeping_tasks.status', [
+                HousekeepingTask::STATUS_PENDING,
+                HousekeepingTask::STATUS_IN_PROGRESS,
+                HousekeepingTask::STATUS_COMPLETED,
+            ])
+            ->join('rooms', 'housekeeping_tasks.room_id', '=', 'rooms.id')
+            ->orderBy('rooms.floor')
+            ->orderBy('rooms.number')
+            ->select('housekeeping_tasks.*')
+            ->get()
+            ->map(fn (HousekeepingTask $task): array => [
+                'id' => $task->id,
+                'roomNumber' => $task->room->number,
+                'floor' => $task->room->floor,
+                'roomType' => $task->room->type?->name,
+                'cleaningType' => $task->cleaning_type,
+                'status' => $this->statusLabel($task->status),
+                'rawStatus' => $task->status,
+                'guestName' => $task->metadata['guest_name'] ?? null,
+                'companyName' => $task->metadata['company_name'] ?? null,
+                'reservationCode' => $task->metadata['reservation_code'] ?? null,
+                'checkInDate' => $task->metadata['check_in_date'] ?? null,
+                'checkOutDate' => $task->metadata['check_out_date'] ?? null,
+                'scheduledAt' => $task->scheduled_at?->format('H:i'),
+                'completedAt' => $task->completed_at?->format('H:i'),
+                'novelties' => $task->taskNotes
+                    ->map(fn ($note): array => [
+                        'id' => $note->id,
+                        'severity' => $note->severity,
+                        'body' => $note->body,
+                        'userName' => $note->user?->name,
+                        'createdAt' => $note->created_at?->format('H:i'),
+                    ])
+                    ->values(),
+            ])
+            ->values()
+            ->all();
     }
 }
