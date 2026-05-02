@@ -1,0 +1,2288 @@
+{
+    "standard_recipes": [
+        {
+            "dish_code": "CHP",
+            "dish_name": "Chuleta a la plancha",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CHULETA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CHB",
+            "dish_name": "Chuleta bbq",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CHULETA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA BBQ",
+                    "quantity_used": "1.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CHA",
+            "dish_name": "Chuletas agridulces",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CHULETA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA AGRIDULCE",
+                    "quantity_used": "1.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CH",
+            "dish_name": "Churrasco",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "HUEVOS",
+                    "quantity_used": "2.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ENSALADA",
+                    "quantity_used": "4.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CB",
+            "dish_name": "Cordon blue",
+            "category": "CARTA",
+            "subcategory": "CARNE BLANCA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "1/4 DE POLLO (220G)",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "JAMON TAJA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "QUESO MOZZARELLA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "FM",
+            "dish_name": "Filet mignon",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "LZ",
+            "dish_name": "Lomo Zeus",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "LM",
+            "dish_name": "Lomo a la milanesa",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "LP",
+            "dish_name": "Lomo a la pimienta",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 8,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "LMT",
+            "dish_name": "Lomo mar y tierra",
+            "category": "CARTA",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "MP",
+            "dish_name": "MENU CENA  A",
+            "category": "MENÚ",
+            "subcategory": "CARNE BLANCA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "1/4 DE POLLO (220G)",
+                    "quantity_used": "0.5000",
+                    "unit": "PORCIÓN",
+                    "equivalence": "110g",
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "85.0000",
+                    "unit": "GRAMOS",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "1/4 DE POLLO (220G)",
+                    "quantity_used": "0.5000",
+                    "unit": "PORCIÓN",
+                    "equivalence": "220G",
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 8,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "MCH",
+            "dish_name": "MENU CENA H",
+            "category": "MENÚ",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CHULETERO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": "0.8KG",
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CHULETERO",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": "0.8KG",
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 8,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "ML",
+            "dish_name": "MENU CENA L",
+            "category": "MENÚ",
+            "subcategory": "CARNE ROJA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO 220G",
+                    "quantity_used": "0.5000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LOMO 220G",
+                    "quantity_used": "0.5000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 8,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "MT",
+            "dish_name": "MENU CENA T",
+            "category": "MENÚ",
+            "subcategory": "MARISCO",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "TILAPIA FUNDA DE 220 GR",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "TILAPIA FUNDA DE 220 GR",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 8,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "PZ",
+            "dish_name": "Pechuga zeus",
+            "category": "CARTA",
+            "subcategory": "CARNE BLANCA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "1/4 DE POLLO (220G)",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "SB",
+            "dish_name": "Spaguetti Bolognesa",
+            "category": "CARTA",
+            "subcategory": "PASTAS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA DE BOLONESA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "QUESO",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SPAGUETTI",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CARNE",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "SZ",
+            "dish_name": "Spaguetti zeus",
+            "category": "CARTA",
+            "subcategory": "PASTAS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SPAGUETTI",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "QUESO",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAN DE AJO",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "AC",
+            "dish_name": "arroz con camaron",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CAMARONES",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CP",
+            "dish_name": "camarones a la plancha",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CAMARONES",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CA",
+            "dish_name": "camarones al ajillo",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CORVINA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CAMARONES",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 8,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 9,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA AJILLO",
+                    "quantity_used": "1.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CR",
+            "dish_name": "camarones reventados",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CAMARONES",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CC",
+            "dish_name": "ceviche de camarón",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CAMARONES",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "2.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "TOMATE",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CV",
+            "dish_name": "corvina al vapor con legumbres",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CORVINA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "CL",
+            "dish_name": "corvina l gourmet",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CORVINA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA DECAMARÓN",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "LL",
+            "dish_name": "lasagna carne o pollo",
+            "category": "CARTA",
+            "subcategory": "PASTAS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PASTA DE LASANA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CARNE MOLIDA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA BECHAMEL",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "VINO",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "TOMATE",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 6,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LECHE",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 7,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CEBOLLA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "PP",
+            "dish_name": "pollo a la plancha",
+            "category": "CARTA",
+            "subcategory": "CARNE BLANCA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "1/4 DE POLLO (220G)",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "PC",
+            "dish_name": "pollo con champiñones",
+            "category": "CARTA",
+            "subcategory": "CARNE BLANCA",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "1/4 DE POLLO (220G)",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CHAMPÍGNIONES",
+                    "quantity_used": "1.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 5,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "SC",
+            "dish_name": "spaguetti con camarones",
+            "category": "CARTA",
+            "subcategory": "PASTAS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "CAMARONES",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SALSA",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "SPAGUETTI",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAN",
+                    "quantity_used": "0.0000",
+                    "unit": "",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        },
+        {
+            "dish_code": "TP",
+            "dish_name": "tilapia a la plancha",
+            "category": "CARTA",
+            "subcategory": "MARISCOS",
+            "is_active": true,
+            "items": [
+                {
+                    "sort_order": 1,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "TILAPIA",
+                    "quantity_used": "1.0000",
+                    "unit": "PORCIÓN",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 2,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "ARROZ",
+                    "quantity_used": "3.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 3,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "LEGUMBRE",
+                    "quantity_used": "4.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                },
+                {
+                    "sort_order": 4,
+                    "inventory_product_id": null,
+                    "inventory_product_name": "PAPAS",
+                    "quantity_used": "6.0000",
+                    "unit": "OZ",
+                    "equivalence": null,
+                    "notes": null
+                }
+            ]
+        }
+    ],
+    "kitchen_daily_stock_items": [
+        {
+            "category": "CARNES",
+            "product_name": "Boloñesa",
+            "target_stock": "20.0000",
+            "unit": "TAR",
+            "unit_detail": "TARINAS",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Camaron",
+            "target_stock": "20.0000",
+            "unit": "POR",
+            "unit_detail": "12 CAM",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Carne lomo falda 225g",
+            "target_stock": "20.0000",
+            "unit": "UND",
+            "unit_detail": "225 GR",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Carne lomo fino 225g",
+            "target_stock": "20.0000",
+            "unit": "UND",
+            "unit_detail": "225 GR",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Chuletas",
+            "target_stock": "20.0000",
+            "unit": "UND",
+            "unit_detail": "UND",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Corvina",
+            "target_stock": "12.0000",
+            "unit": "UND",
+            "unit_detail": "DE 454 GR",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Jamon solo eventos",
+            "target_stock": "3.0000",
+            "unit": "PAQ",
+            "unit_detail": "DE 10 UNIDADES",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Mortadela",
+            "target_stock": "2.0000",
+            "unit": "PAQ",
+            "unit_detail": "PAQ",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Pollo pechuga",
+            "target_stock": "20.0000",
+            "unit": "UND",
+            "unit_detail": "UND",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Pollo piernas",
+            "target_stock": "20.0000",
+            "unit": "UND",
+            "unit_detail": "UND",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Salchichas",
+            "target_stock": "2.0000",
+            "unit": "PAQ",
+            "unit_detail": "DE 10 UNIDADES",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Tilapia",
+            "target_stock": "12.0000",
+            "unit": "UND",
+            "unit_detail": "DE 454 GR",
+            "is_active": true
+        },
+        {
+            "category": "CARNES",
+            "product_name": "Tocino",
+            "target_stock": "3.0000",
+            "unit": "PAQ",
+            "unit_detail": "DE 10 UNIDADES",
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Cafe instantaneo",
+            "target_stock": "1.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Cafe pasado minerva",
+            "target_stock": "1.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Cereal Loops",
+            "target_stock": "5.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Cereal chocolate",
+            "target_stock": "5.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Cereal zucaritas",
+            "target_stock": "5.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Granola",
+            "target_stock": "3.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Huevos Cocina",
+            "target_stock": "30.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Huevos Desayuno",
+            "target_stock": "150.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Leche Cruda",
+            "target_stock": "10.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Leche deslactosada",
+            "target_stock": "1.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Leche entera",
+            "target_stock": "12.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Mantequilla",
+            "target_stock": "2.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Mermelada",
+            "target_stock": "3.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Queso",
+            "target_stock": "5.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "DESAYUNOS",
+            "product_name": "Yogur",
+            "target_stock": "9.0000",
+            "unit": "LTS",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Aceite",
+            "target_stock": "1.0000",
+            "unit": "GL",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Aceitunas",
+            "target_stock": "3.0000",
+            "unit": "FRC",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Achiote",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Alcohol",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Aliño Completo",
+            "target_stock": "3.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Arroz",
+            "target_stock": "14.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Atun",
+            "target_stock": "4.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Azucar",
+            "target_stock": "3.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Azucar Sobre",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Cafe capuccino minerva",
+            "target_stock": "1.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Cafe mokaccino minerva",
+            "target_stock": "1.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Caldo costilla",
+            "target_stock": "1.0000",
+            "unit": "CAJ",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Canelones",
+            "target_stock": "3.0000",
+            "unit": "CAJ",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Cangil",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Cauca",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Champiñones",
+            "target_stock": "3.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Crema chantilly",
+            "target_stock": "1.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Crema de leche",
+            "target_stock": "2.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Dejas",
+            "target_stock": "4.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Durazno almibar",
+            "target_stock": "3.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Esparragos",
+            "target_stock": "3.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Fideo codito",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Fideo macarron",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Fideo pluma",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Fideo sopa",
+            "target_stock": "2.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Flan",
+            "target_stock": "3.0000",
+            "unit": "CAJ",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Funda basura",
+            "target_stock": "2.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Gelatina",
+            "target_stock": "2.0000",
+            "unit": "CAJ",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Gelatina sin sabor",
+            "target_stock": "3.0000",
+            "unit": "CAJ",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Harina",
+            "target_stock": "10.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Harina haba",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Harina ya 2kg",
+            "target_stock": "2.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Lava vajilla",
+            "target_stock": "2.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Lenteja",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Maicena",
+            "target_stock": "4.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Maiz Dulce",
+            "target_stock": "3.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Maizabrosa",
+            "target_stock": "2.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Morocho",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Palmitos",
+            "target_stock": "3.0000",
+            "unit": "LT",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Papel aluminio",
+            "target_stock": "2.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Papel cocina",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Pasta tomate",
+            "target_stock": "2.0000",
+            "unit": "FRC",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Pulpa maracuya",
+            "target_stock": "3.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Pulpa mora",
+            "target_stock": "3.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Pulpa tomate de arbol",
+            "target_stock": "3.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Queso mozzarella",
+            "target_stock": "2.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Quinua",
+            "target_stock": "2.0000",
+            "unit": "LB",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Ranchero",
+            "target_stock": "1.0000",
+            "unit": "CAJ",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Sal",
+            "target_stock": "2.0000",
+            "unit": "FDA",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Salsa china",
+            "target_stock": "1.0000",
+            "unit": "GL",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Salsa tomate",
+            "target_stock": "1.0000",
+            "unit": "GL",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Servilletas",
+            "target_stock": "2.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Stevia",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Tallarin",
+            "target_stock": "4.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Tres leches",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Vinagre",
+            "target_stock": "1.0000",
+            "unit": "GL",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Vino blanco",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        },
+        {
+            "category": "OTROS",
+            "product_name": "Vino tinto",
+            "target_stock": "1.0000",
+            "unit": "UND",
+            "unit_detail": null,
+            "is_active": true
+        }
+    ],
+    "kitchen_inventory_product_mappings": []
+}

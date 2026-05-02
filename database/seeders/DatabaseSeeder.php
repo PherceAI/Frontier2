@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Organization\Models\Area;
 use App\Domain\Operations\Models\OperationalEvent;
 use App\Domain\Operations\Models\OperationalForm;
 use App\Domain\Operations\Models\OperationalNotification;
 use App\Domain\Operations\Models\OperationalTask;
+use App\Domain\Organization\Models\Area;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -206,5 +206,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'pending',
             'body' => 'Tienes eventos, tareas e insumos criticos por revisar.',
         ]);
+
+        $this->call(RestaurantCatalogSeeder::class);
     }
 }
